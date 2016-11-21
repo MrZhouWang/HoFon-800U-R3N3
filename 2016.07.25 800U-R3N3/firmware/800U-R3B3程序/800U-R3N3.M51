@@ -1,0 +1,480 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        08/15/2016  14:29:24  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KILE\C51\BIN\BL51.EXE STARTUP.obj, 800U-R3N3.obj TO 800U-R3N3 REGFILE (.\800U-R3N3.ORC) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  800U-R3N3.obj (800U_R3N3)
+  C:\PROGRAM FILES\KILE\C51\LIB\C51S.LIB (?C?SLCMP)
+
+
+LINK MAP OF MODULE:  800U-R3N3 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000CH     UNIT         ?DT?800U_R3N3
+            DATA    0014H     0004H     UNIT         _DATA_GROUP_
+                    0018H     0008H                  *** GAP ***
+            BIT     0020H.0   0000H.5   UNIT         ?BI?800U_R3N3
+                    0020H.5   0000H.3                *** GAP ***
+            IDATA   0021H     00C8H     UNIT         ?ID?800U_R3N3
+            IDATA   00E9H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     UNIT         ?PR?INTERRUPT_INIT?800U_R3N3
+                    0006H     0005H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     01CAH     UNIT         ?PR?MAIN?800U_R3N3
+            CODE    01D8H     00C9H     UNIT         ?PR?TIMER0?800U_R3N3
+            CODE    02A1H     001AH     UNIT         ?PR?_DELAY_XMS?800U_R3N3
+            CODE    02BBH     0017H     UNIT         ?PR?PORT_INIT?800U_R3N3
+            CODE    02D2H     0016H     UNIT         ?PR?ADC_SAMP?800U_R3N3
+            CODE    02E8H     0016H     UNIT         ?C?LIB_CODE
+            CODE    02FEH     0014H     UNIT         ?PR?TIMER0_INIT?800U_R3N3
+            CODE    0312H     0010H     UNIT         ?PR?OSCILLATOR_INIT?800U_R3N3
+            CODE    0322H     000DH     UNIT         ?PR?ADC_INIT?800U_R3N3
+            CODE    032FH     000CH     UNIT         ?C_C51STARTUP
+            CODE    033BH     0009H     UNIT         ?PR?DELAY?800U_R3N3
+
+
+
+OVERLAY MAP OF MODULE:   800U-R3N3 (?C_STARTUP)
+
+
+SEGMENT                                 DATA_GROUP 
+  +--> CALLED SEGMENT                 START    LENGTH
+-----------------------------------------------------
+?C_C51STARTUP                         -----    -----
+  +--> ?PR?MAIN?800U_R3N3
+
+?PR?MAIN?800U_R3N3                    0014H    0004H
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/15/2016  14:29:24  PAGE 2
+
+
+  +--> ?PR?PORT_INIT?800U_R3N3
+  +--> ?PR?_DELAY_XMS?800U_R3N3
+  +--> ?PR?OSCILLATOR_INIT?800U_R3N3
+  +--> ?PR?TIMER0_INIT?800U_R3N3
+  +--> ?PR?ADC_INIT?800U_R3N3
+  +--> ?PR?ADC_SAMP?800U_R3N3
+  +--> ?PR?INTERRUPT_INIT?800U_R3N3
+
+?PR?_DELAY_XMS?800U_R3N3              -----    -----
+  +--> ?PR?DELAY?800U_R3N3
+
+*** NEW ROOT ***************************************************
+
+?PR?TIMER0?800U_R3N3                  -----    -----
+  +--> ?PR?ADC_SAMP?800U_R3N3
+
+
+
+SYMBOL TABLE OF MODULE:  800U-R3N3 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:032FH         SEGMENT       ?C_C51STARTUP
+  I:00E9H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0332H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:032FH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:032FH         LINE#         99
+  C:0331H         LINE#         100
+  C:0332H         LINE#         101
+  C:0333H         LINE#         102
+  C:0335H         LINE#         151
+  C:0338H         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/15/2016  14:29:24  PAGE 3
+
+
+  -------         MODULE        800U_R3N3
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  I:0021H         PUBLIC        difDat1
+  B:0020H.0       PUBLIC        f_pross
+  D:0008H         PUBLIC        prosscnt
+  B:0080H.2       PUBLIC        pLEDOUTB
+  D:00BCH         PUBLIC        ADC0CF
+  B:00A8H.7       PUBLIC        EA
+  B:0080H.3       PUBLIC        pLEDOUTG
+  B:0080H.0       PUBLIC        pEMILEDCTL
+  D:00E8H         PUBLIC        ADC0CN
+  D:00A4H         PUBLIC        P0MDOUT
+  D:00A8H         PUBLIC        IE
+  D:0009H         PUBLIC        shanshuocishu
+  C:033BH         PUBLIC        delay
+  I:0053H         PUBLIC        DsampDat
+  B:0080H.6       PUBLIC        pLEDOUTR
+  D:00ECH         PUBLIC        PCA0CPH2
+  D:00D9H         PUBLIC        PCA0MD
+  D:00D8H         PUBLIC        PCA0CN
+  D:00EBH         PUBLIC        PCA0CPL2
+  D:00B8H         PUBLIC        IP
+  D:00E1H         PUBLIC        XBR0
+  D:00E3H         PUBLIC        XBR2
+  D:00D1H         PUBLIC        REF0CN
+  B:00E8H.5       PUBLIC        AD0INT
+  D:00C0H         PUBLIC        SMB0CN
+  C:000EH         PUBLIC        main
+  D:00F8H         PUBLIC        CPT0CN
+  D:00F1H         PUBLIC        P0MDIN
+  C:02FEH         PUBLIC        Timer0_Init
+  C:02A1H         PUBLIC        _delay_Xms
+  D:000BH         PUBLIC        count
+  D:000DH         PUBLIC        RevBase
+  B:0020H.1       PUBLIC        f_FSLedOut
+  C:01D8H         PUBLIC        Timer0
+  B:0020H.2       PUBLIC        f_shanshuo
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:00BBH         PUBLIC        AMX0SL
+  D:00C8H         PUBLIC        TMR2CN
+  D:000EH         PUBLIC        ledemicnt
+  C:02D2H         PUBLIC        ADC_Samp
+  C:02BBH         PUBLIC        PORT_Init
+  C:0322H         PUBLIC        ADC_Init
+  B:0020H.3       PUBLIC        f_OUT
+  D:00B2H         PUBLIC        OSCICN
+  B:00A8H.1       PUBLIC        ET0
+  C:0003H         PUBLIC        Interrupt_Init
+  D:008CH         PUBLIC        TH0
+  I:0085H         PUBLIC        sampDat
+  I:00B7H         PUBLIC        difDat
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:000FH         PUBLIC        out
+  B:0020H.4       PUBLIC        f_prossout
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/15/2016  14:29:24  PAGE 4
+
+
+  D:0010H         PUBLIC        count1
+  D:0012H         PUBLIC        buwendin
+  B:0080H.5       PUBLIC        pOUTPUT
+  D:0098H         PUBLIC        SCON0
+  D:008EH         PUBLIC        CKCON
+  C:0312H         PUBLIC        OSCILLATOR_Init
+  D:00BEH         PUBLIC        ADC0
+  D:0013H         PUBLIC        sampcnt
+  B:00E8H.4       PUBLIC        AD0BUSY
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          DELAY
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  -------         ENDDO         
+  C:033BH         LINE#         102
+  C:033BH         LINE#         103
+  C:033BH         LINE#         105
+  C:033DH         LINE#         106
+  C:0343H         LINE#         107
+  -------         ENDPROC       DELAY
+  -------         PROC          _DELAY_XMS
+  D:0004H         SYMBOL        cnt
+  C:02A1H         LINE#         110
+  C:02A7H         LINE#         111
+  C:02A7H         LINE#         113
+  C:02B0H         LINE#         114
+  C:02B0H         LINE#         115
+  C:02B3H         LINE#         116
+  C:02B8H         LINE#         117
+  C:02BAH         LINE#         118
+  -------         ENDPROC       _DELAY_XMS
+  -------         PROC          INTERRUPT_INIT
+  C:0003H         LINE#         126
+  C:0003H         LINE#         127
+  C:0003H         LINE#         128
+  C:0005H         LINE#         129
+  -------         ENDPROC       INTERRUPT_INIT
+  -------         PROC          TIMER0_INIT
+  C:02FEH         LINE#         131
+  C:02FEH         LINE#         132
+  C:02FEH         LINE#         133
+  C:0301H         LINE#         134
+  C:0304H         LINE#         135
+  C:0307H         LINE#         137
+  C:0309H         LINE#         138
+  C:030BH         LINE#         139
+  C:030EH         LINE#         140
+  C:0311H         LINE#         142
+  -------         ENDPROC       TIMER0_INIT
+  -------         PROC          ADC_INIT
+  C:0322H         LINE#         144
+  C:0322H         LINE#         145
+  C:0322H         LINE#         146
+  C:0325H         LINE#         148
+  C:0328H         LINE#         150
+  C:032BH         LINE#         153
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/15/2016  14:29:24  PAGE 5
+
+
+  C:032EH         LINE#         154
+  -------         ENDPROC       ADC_INIT
+  -------         PROC          OSCILLATOR_INIT
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:0312H         LINE#         157
+  C:0312H         LINE#         158
+  C:0312H         LINE#         160
+  C:0315H         LINE#         161
+  C:0318H         LINE#         162
+  C:031CH         LINE#         163
+  C:0321H         LINE#         164
+  -------         ENDPROC       OSCILLATOR_INIT
+  -------         PROC          PORT_INIT
+  C:02BBH         LINE#         175
+  C:02BBH         LINE#         176
+  C:02BBH         LINE#         178
+  C:02BEH         LINE#         180
+  C:02C1H         LINE#         182
+  C:02C4H         LINE#         183
+  C:02C7H         LINE#         187
+  C:02C9H         LINE#         188
+  C:02CBH         LINE#         189
+  C:02CDH         LINE#         190
+  C:02CFH         LINE#         191
+  C:02D1H         LINE#         192
+  -------         ENDPROC       PORT_INIT
+  -------         PROC          ADC_SAMP
+  -------         DO            
+  D:0006H         SYMBOL        tmp
+  D:0007H         SYMBOL        dat
+  -------         ENDDO         
+  C:02D2H         LINE#         197
+  C:02D2H         LINE#         198
+  C:02D2H         LINE#         200
+  C:02D4H         LINE#         201
+  C:02D6H         LINE#         202
+  C:02D8H         LINE#         204
+  C:02DAH         LINE#         205
+  C:02DAH         LINE#         206
+  C:02DDH         LINE#         207
+  C:02DDH         LINE#         208
+  C:02DFH         LINE#         209
+  C:02E1H         LINE#         210
+  C:02E3H         LINE#         211
+  C:02E5H         LINE#         212
+  C:02E5H         LINE#         213
+  C:02E7H         LINE#         214
+  C:02E7H         LINE#         215
+  -------         ENDPROC       ADC_SAMP
+  -------         PROC          TIMER0
+  C:01D8H         LINE#         221
+  C:01FAH         LINE#         223
+  C:0202H         LINE#         224
+  C:020AH         LINE#         225
+  C:021CH         LINE#         226
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/15/2016  14:29:24  PAGE 6
+
+
+  C:021CH         LINE#         227
+  C:0222H         LINE#         228
+  C:0227H         LINE#         229
+  C:0227H         LINE#         231
+  C:022AH         LINE#         232
+  C:022AH         LINE#         235
+  C:022CH         LINE#         236
+  C:022FH         LINE#         238
+  C:0236H         LINE#         239
+  C:0239H         LINE#         241
+  C:023BH         LINE#         244
+  C:0245H         LINE#         247
+  C:0247H         LINE#         249
+  C:0247H         LINE#         251
+  C:024CH         LINE#         252
+  C:024CH         LINE#         258
+  C:024EH         LINE#         259
+  C:0250H         LINE#         262
+  C:025AH         LINE#         263
+  C:025AH         LINE#         264
+  C:025CH         LINE#         265
+  C:025FH         LINE#         266
+  C:025FH         LINE#         267
+  C:025FH         LINE#         270
+  C:0266H         LINE#         271
+  C:0266H         LINE#         273
+  C:0268H         LINE#         274
+  C:026AH         LINE#         276
+  C:0271H         LINE#         277
+  C:0274H         LINE#         279
+  C:027EH         LINE#         281
+  C:027EH         LINE#         282
+  C:027EH         LINE#         283
+  -------         ENDPROC       TIMER0
+  -------         PROC          MAIN
+  -------         DO            
+  D:0014H         SYMBOL        cnt
+  D:0015H         SYMBOL        i
+  D:0016H         SYMBOL        sum
+  D:0014H         SYMBOL        dat0
+  D:0015H         SYMBOL        dat1
+  D:0016H         SYMBOL        dif
+  -------         ENDDO         
+  -------         DO            
+  D:0014H         SYMBOL        dat0
+  D:0015H         SYMBOL        dat1
+  D:0016H         SYMBOL        dif
+  -------         ENDDO         
+  C:000EH         LINE#         288
+  C:000EH         LINE#         289
+  C:000EH         LINE#         290
+  C:0011H         LINE#         294
+  C:0014H         LINE#         297
+  C:0016H         LINE#         298
+  C:001DH         LINE#         299
+  C:001FH         LINE#         301
+  C:0021H         LINE#         302
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/15/2016  14:29:24  PAGE 7
+
+
+  C:0028H         LINE#         303
+  C:002AH         LINE#         305
+  C:002CH         LINE#         306
+  C:0033H         LINE#         307
+  C:0035H         LINE#         309
+  C:0038H         LINE#         310
+  C:003BH         LINE#         311
+  C:003EH         LINE#         317
+  C:003EH         LINE#         319
+  C:0043H         LINE#         320
+  C:0046H         LINE#         321
+  C:0046H         LINE#         322
+  C:0053H         LINE#         323
+  C:0059H         LINE#         324
+  C:0062H         LINE#         325
+  C:0071H         LINE#         326
+  C:0071H         LINE#         329
+  C:0074H         LINE#         330
+  C:0077H         LINE#         332
+  C:007AH         LINE#         335
+  C:007CH         LINE#         336
+  C:007FH         LINE#         337
+  C:007FH         LINE#         338
+  C:007FH         LINE#         341
+  C:0082H         LINE#         344
+  C:0092H         LINE#         345
+  C:0092H         LINE#         346
+  C:0094H         LINE#         349
+  C:009AH         LINE#         350
+  C:009DH         LINE#         353
+  C:00A5H         LINE#         354
+  C:00ADH         LINE#         356
+  C:00B4H         LINE#         357
+  C:00BCH         LINE#         358
+  C:00C3H         LINE#         360
+  C:00CAH         LINE#         363
+  C:00D1H         LINE#         364
+  C:00D9H         LINE#         365
+  C:00E0H         LINE#         367
+  C:00E7H         LINE#         368
+  C:00EFH         LINE#         369
+  C:00F6H         LINE#         371
+  C:0100H         LINE#         373
+  C:0107H         LINE#         376
+  C:0115H         LINE#         377
+  C:0119H         LINE#         379
+  C:0126H         LINE#         380
+  C:012EH         LINE#         383
+  C:013CH         LINE#         384
+  C:0140H         LINE#         386
+  C:0150H         LINE#         387
+  C:0158H         LINE#         390
+  C:015FH         LINE#         391
+  C:0162H         LINE#         394
+  C:0169H         LINE#         395
+  C:016CH         LINE#         396
+  C:016CH         LINE#         399
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/15/2016  14:29:24  PAGE 8
+
+
+  C:0172H         LINE#         400
+  C:0172H         LINE#         401
+  C:0174H         LINE#         403
+  C:0176H         LINE#         406
+  C:017DH         LINE#         407
+  C:017DH         LINE#         408
+  C:017FH         LINE#         409
+  C:0181H         LINE#         410
+  C:0183H         LINE#         411
+  C:0185H         LINE#         413
+  C:018CH         LINE#         414
+  C:018CH         LINE#         415
+  C:018EH         LINE#         416
+  C:0190H         LINE#         417
+  C:0192H         LINE#         418
+  C:0194H         LINE#         419
+  C:019BH         LINE#         420
+  C:019BH         LINE#         421
+  C:019DH         LINE#         422
+  C:01A2H         LINE#         423
+  C:01A2H         LINE#         427
+  C:01A8H         LINE#         428
+  C:01A8H         LINE#         429
+  C:01B3H         LINE#         430
+  C:01B7H         LINE#         431
+  C:01B9H         LINE#         433
+  C:01CFH         LINE#         434
+  C:01D4H         LINE#         435
+  C:01D4H         LINE#         436
+  C:01D4H         LINE#         437
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        800U_R3N3
+
+  -------         MODULE        ?C?SLCMP
+  C:02E8H         PUBLIC        ?C?SLCMP
+  -------         ENDMOD        ?C?SLCMP
+
+
+
+FUNCTION REGISTER MASKS
+
+
+FUNCTION . . . . . REG MASK
+---------------------------
+
+ADC_INIT . . . . . @0x8000
+ADC_SAMP . . . . . @0xe003
+DELAY. . . . . . . @0xc003
+INTERRUPT_INIT . . @0x8000
+OSCILLATOR_INIT. . @0xe001
+PORT_INIT. . . . . @0xc000
+TIMER0_INIT. . . . @0xc000
+_DELAY_XMS . . . . @0xf00f
+
+Program Size: data=225.5 xdata=0 code=831
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

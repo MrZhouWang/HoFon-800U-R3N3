@@ -1,0 +1,164 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              11/14/2016 14:13:36 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\main.obj
+COMPILER INVOKED BY: C:\Program Files\kile\C51\BIN\C51.EXE ..\SRC\main.c OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(..\INC) DE
+                    -BUG PRINT(.\main.lst) TABS(2) OBJECT(.\main.obj)
+
+line level    source
+
+   1          /********************************************************************************
+   2          工作状态下 
+   3          
+   4                使能     按键     灯        输出
+   5                
+   6                 0       按下     黄         有
+   7                 0       松开     灭         无
+   8                 1       松开     红         无
+   9                 1       按下     绿         有    
+  10          
+  11          使能：1 使能输入   0 无使能输入
+  12          
+  13          
+  14          基准采样在定时器初上电几个周期内完成，与平时采样环境保持一致
+  15          
+  16          2016.09.18  感应离开延时100ms灯色切换
+  17          2016.10.27  开关状态对比值采用绝对值
+  18          2016.10.27  基准采样在上电的时候取100次平均值 标准基准值在1.35V左右 如果基准值不在这个范围内则红灯常亮在报
+             -警状态
+  19          2016.10.28  集准采样发生异常设备会进行相应的异常指示
+  20          ********************************************************************************/
+  21          
+  22          #define MAIN_GLOBAL
+  23          #include "include.h"      
+  24          INT8U sysStatus = SYSTEM_INIT;    //系统状态
+  25          INT16U  basecount=0;
+  26          INT8U   out=0;
+  27          INT16U RevBase=0;
+  28          bit f_prossout= FALSE;
+  29          bit valid_ok = FALSE;
+  30          //////////////////////////////////////////////////////////////////////////////////
+  31          //// 功能描述 : 系统频率设置
+  32          //// 输入参数 : 
+  33          //// 返回参数 : 
+  34          //// 说明     : 
+  35          //////////////////////////////////////////////////////////////////////////////////
+  36          void OSCILLATOR_Init (void)
+  37          {     
+  38   1        INT8U i;
+  39   1        OSCICN   = 0x06;                //频率为25Mhz /2 =12.5
+  40   1        for(i = 500; i>0; i--);
+  41   1        while((OSCICN & 0x10) == 0) ;   // 判断是否正常振荡
+  42   1      }
+  43          //////////////////////////////////////////////////////////////////////////////////
+  44          //// 功能描述 : 主函数
+  45          //// 输入参数 : 
+  46          //// 返回参数 : 
+  47          //// 说明     :  
+  48          //////////////////////////////////////////////////////////////////////////////////
+  49          void main(void)
+  50          { 
+  51   1        //delay_ms(100);  
+  52   1        PCA0MD &= ~0x40;             //看门狗定时器被禁止
+  53   1        RSTSRC |= 0x02;              //使能VDD电压监视
+C51 COMPILER V9.52.0.0   MAIN                                                              11/14/2016 14:13:36 PAGE 2   
+
+  54   1        PORT_Init ();                // Initialize crossbar and GPIO
+  55   1        
+  56   1        OSCILLATOR_Init();           // Initialize the system clock                           
+  57   1        Timer0_Init ();              // Timer0 自动重装模式2
+  58   1      
+  59   1        ADC_Init ();                 // 设置ADC
+  60   1        
+  61   1      
+  62   1        delay_ms(100);    
+  63   1        
+  64   1        Base_ADC();                  //基准采样
+  65   1        led_blink();  
+  66   1        PCA0CPL2 = 0xff;             // 33ms
+  67   1        PCA0MD  |= 0x60;             // 看门狗定时器被启用 ，锁定看门狗
+  68   1        Interrupt_Init ();           // 开中断
+  69   1        while(1)
+  70   1        {
+  71   2          PCA0CPH2 = 1;              //喂狗
+  72   2          if(AD_Base_OK != OK)       //采集基准电压失败 指示 
+  73   2          {
+  74   3             if(ADC_BaseErrNum == 0)
+  75   3                ADC_BASE_ERR_BLINK();   
+  76   3          } 
+  77   2          else
+  78   2          {
+  79   3             key_status();              //按键状态检测
+  80   3             PCA0CPH2 = 1;              //喂狗  
+  81   3             Disp_Main();               //显示
+  82   3             PCA0CPH2 = 1;              //喂狗  
+  83   3             CMD_led_flash();           //刷新灯色     
+  84   3          }
+  85   2          PCA0CPH2 = 1;                 //喂狗      
+  86   2        } 
+  87   1      }
+  88          //////////////////////////////////////////////////////////////////////////////////
+  89          //// 功能描述 : 触控机制
+  90          //// 输入参数 : 
+  91          //// 返回参数 : 
+  92          //// 说明     :  
+  93          //////////////////////////////////////////////////////////////////////////////////
+  94          void Disp_Main(void)
+  95          {
+  96   1          if(p_signal_input == 1)                          //无输入
+  97   1          {            
+  98   2             if (KeyStatus == ON)                          //无输入时按键按下时黄灯亮
+  99   2             {
+ 100   3                OUTPUT_ON;                                 //输出开
+ 101   3                LedStatus = KEY_PRESS_LED_NOIN ;  
+ 102   3                LedDelayCnt=KEY_COUNT;                     //设置按键松开灯亮延时   在定时器里延时   
+ 103   3             }
+ 104   2             else if(KeyStatus == OFF)                     //当按键松开时
+ 105   2             {
+ 106   3                OUTPUT_OFF;                                //输出关
+ 107   3                if(LedDelayCnt == 0)
+ 108   3                   LedStatus = KEY_RELEASE_LED_NOIN;        
+ 109   3             }           
+ 110   2          }
+ 111   1          
+ 112   1          else if (p_signal_input == 0)                     //有输入
+ 113   1          {
+ 114   2             if (KeyStatus == ON)  
+ 115   2             {  
+C51 COMPILER V9.52.0.0   MAIN                                                              11/14/2016 14:13:36 PAGE 3   
+
+ 116   3                OUTPUT_ON;                                  //输出开
+ 117   3                LedStatus = KEY_PRESS_LED_IN ;              //按键按下灯色
+ 118   3                sysStatus = 1;                              //第一次按下
+ 119   3                LedDelayCnt=KEY_COUNT;                      //设置按键松开灯亮延时           
+ 120   3             }
+ 121   2             else if(KeyStatus == OFF)                      //当按键松开时
+ 122   2             {          
+ 123   3                OUTPUT_OFF;                                 //输出关
+ 124   3                if(LedDelayCnt == 0)                        //不马上关闭按键按下时候的状态
+ 125   3                {                      
+ 126   4                   LedStatus = KEY_RELEASE_LED_IN; 
+ 127   4                   sysStatus=0;
+ 128   4                }
+ 129   3             }
+ 130   2           }
+ 131   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    165    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

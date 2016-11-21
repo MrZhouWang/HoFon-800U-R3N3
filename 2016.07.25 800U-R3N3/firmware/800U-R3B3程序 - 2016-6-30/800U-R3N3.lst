@@ -1,0 +1,475 @@
+C51 COMPILER V9.52.0.0   800U_R3N3                                                         08/17/2016 14:54:30 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE 800U_R3N3
+OBJECT MODULE PLACED IN 800U-R3N3.obj
+COMPILER INVOKED BY: C:\Program Files\kile\C51\BIN\C51.EXE Source File\800U-R3N3.c OPTIMIZE(6,SPEED) REGFILE(.\800U-R3N3
+                    -.ORC) BROWSE NOAREGS DEBUG OBJECTEXTEND PRINT(.\800U-R3N3.lst) TABS(2) OBJECT(800U-R3N3.obj)
+
+line level    source
+
+   1          #include<C8051F300.H>
+   2          //========================================================================================================
+             -====
+   3          // 类型重新定义
+   4          typedef unsigned char     BOOLEAN;
+   5          typedef unsigned char     INT8U;              /* Unsigned  8 bit quantity           */
+   6          typedef signed   char     INT8S;              /* Signed    8 bit quantity           */
+   7          typedef unsigned int    INT16U;             /* Unsigned 16 bit quantity           */
+   8          typedef signed   int    INT16S;           /* Signed   16 bit quantity           */
+   9          typedef unsigned long int   INT32U;           /* Unsigned 32 bit quantity           */
+  10          typedef signed   long int   INT32S;           /* Signed   32 bit quantity           */
+  11          typedef float             FP32;               /* Single precision floating point    */
+  12          typedef double            FP64;               /* Double precision floating point    */
+  13          
+  14          typedef INT16U   OS_STK;                      /* Each stack entry is 32-bit wide                    */
+  15          typedef INT16U   OS_CPU_SR;                   /* Define size of CPU status register (PSR = 32 bits) */
+  16          
+  17          //========================================================================================================
+             -====
+  18          //  void OSCILLATOR_Init (void);       // Configure the system clock
+  19          //  void PORT_Init (void);           // Configure the Crossbar and GPIO
+  20          //  void Comparator0_Init (void);      // Configure Comparator0
+  21          //  void Timer0_Init (void);
+  22          //  void ADC_Init (void);     
+  23          //  void Interrupt_Init(void);
+  24          //========================================================================================================
+             -====
+  25          // IO口定义
+  26          ////  sbit FSOUT = P0^0;      //发射输出
+  27          ////  sbit kOUT = P0^4;     //开关输出
+  28          ////  sbit LEDOUT = P0^5;     //LED输出
+  29          //  sbit FSOUT  = P0^2;     //红光发射输出
+  30          ////  sbit kOUT   = P0^5;     //开关输出  PNP输出
+  31          //  sbit pChkOC = P0^5;     //检测常开常闭  0=常开，1=常闭
+  32          //  sbit kOUT2  = P0^4;     //开关输出  NPN输出
+  33          //  sbit LEDOUT = P0^3;     //LED状态灯输出
+  34          
+  35            sbit pEMILEDCTL  = P0^0;  //红外发射输出
+  36            sbit pOUTPUT  = P0^5;     //开关输出  NPN输出
+  37            sbit pINPUT   = P0^4;     //输入
+  38            sbit pLEDOUTG = P0^3;     //LED状态灯输出
+  39            sbit pLEDOUTB = P0^2;     //LED状态灯输出
+  40            sbit pLEDOUTR = P0^6;     //LED状态灯输出
+  41          
+  42          //  INT16U  count1;
+  43          //  INT32U  closetime;
+  44            
+  45          //========================================================================================================
+             -====
+  46          //常量定义                                                        
+  47          //#define   WDVAL     0x2E  //0.6V       稳定
+  48          //#define   WDSSVAL     0x26  //0.5V       持续闪烁
+  49          //#define   NOSSVAL     0x1E  //0.4V       有挡就无
+  50          //#define   NOVAL     0x19  //0.33V      无信号
+C51 COMPILER V9.52.0.0   800U_R3N3                                                         08/17/2016 14:54:30 PAGE 2   
+
+  51          
+  52          //#define   WDVAL   0x40  //0x26  //0.5V       稳定
+  53          //#define   WDSSVAL   0x2A  //0x1E  //0.4V       持续闪烁
+  54          //#define   NOSSVAL   0x20  //0X17  //0.3V       有挡就无
+  55          //#define   NOVAL   0x1A  //0X11  //0.23V      无信号                     //0X11
+  56          
+  57          
+  58          #define   WDVAL   0x24//0x40  //0x26  //0.5V       稳定
+  59          #define   WDSSVAL   0x23//0x2A  //0x1E  //0.4V       持续闪烁
+  60          #define   NOSSVAL   0x20//0x20  //0X17  //0.3V       有挡就无
+  61          #define   NOVAL   0x1A//0x1A  //0X11  //0.23V      无信号                     //0X11
+  62          
+  63          //#define   OVERCURVAL  70    //0.9V       检测PNP是否过流
+  64          //#define   BASEVAL   107   //1.43V      基准电压值
+  65          
+  66          #define   TRUE    1   //标志的真
+  67          #define   FALSE   0   //标志的假
+  68          
+  69          #define   ON      1   //IO口控制的开关管,低电平开
+  70          #define   OFF     0   //IO口控制的开关管,高电平关
+  71          
+  72          #define   FSLEDZKB  100//20   // 占空比，1/12,10us 一次,12,20 
+  73          #define   PROSSCNT  10    // 采集多少个点处理一次
+  74          
+  75          #define   SAMPCNTMAX  50    // 采集最大点数
+  76          //========================================================================
+  77          /////////////////////////////////////////////////
+  78          
+  79          //  全局变量定义
+  80            bit   f_OUT;      // 输出状态标志
+  81            bit   f_FSLedOut;   // 红外发射开关标志， TRUE  = 打开
+  82            bit   f_pross;    // 高低端完整采集完成标志，TRUE 待处理
+  83            bit   f_prossout;   // 处理一次输出标志，采集一定脉冲数再处理，TRUE 待处理
+  84            bit   f_shanshuo;   // 闪烁标志 ，  TRUE闪烁
+  85          
+  86            INT8U ledemicnt;    // 红外发射关断间隔时间
+  87            INT8U out ;     // 有效遮挡次数
+  88          //  INT8U timinc;
+  89            INT8U buwendin;   // 遮挡临界，不稳定次数
+  90          //  INT8U occnt;
+  91            INT8U sampcnt;      // 采样点数
+  92          
+  93            INT8U RevBase;    // 基准电压值
+  94            INT8U prosscnt;   // 发射周期计数
+  95            INT8U  idata  sampDat[SAMPCNTMAX] ,difDat[SAMPCNTMAX],DsampDat[SAMPCNTMAX];
+  96          
+  97            INT16U  count;        // 对10us计数，最大650ms
+  98            INT16U  shanshuocishu;  // 闪烁变化值,过流关断时间
+  99          //=========================================================================                       
+ 100          void delay(void)                                                
+ 101          {  
+ 102   1        INT8U i,j;
+ 103   1          for(i=30;i>0;i--)
+ 104   1        for(j=30;j>0;j--) ;
+ 105   1      }
+ 106          
+ 107          // 延时ms
+ 108          void delay_Xms( INT16U cnt)                                             
+ 109          {  
+ 110   1      
+ 111   1        while(cnt > 0)
+ 112   1        {
+C51 COMPILER V9.52.0.0   800U_R3N3                                                         08/17/2016 14:54:30 PAGE 3   
+
+ 113   2             delay();
+ 114   2           cnt--;
+ 115   2        }
+ 116   1      }
+ 117          /////////////////////////////////////////////////
+ 118          //void Comparator0_Init (void)
+ 119          //{CPT0MD=2;//反应时间320ns
+ 120          //CPT0MX=0x11;//P0.2+  P0.3-
+ 121          //CPT0CN=0x8C;//使能比较器，0x8F回差20mV
+ 122          //}
+ 123          /////////////////////////////////////////////////
+ 124          void Interrupt_Init (void)
+ 125          {
+ 126   1        EA = 1; //中断允许总控制位
+ 127   1      }
+ 128          /////////////////////////////////////////////////
+ 129          void Timer0_Init (void)      // 10us
+ 130          {
+ 131   1        TR0 = 1;            //Timer0启动,即TCON=0x10;
+ 132   1        ET0 = 1;            //T0溢出中断允许
+ 133   1      //  TH0 = 0xf6;     //6us
+ 134   1      //  TH0 = 0xEC;     //6us
+ 135   1        TH0 = (256-15);     //10US
+ 136   1      //  TH0 = 0Xe0;     //10US
+ 137   1      //  TH0 = 256-16*4-2;
+ 138   1        TMOD = 2;     //定时器0 8bit自动重装载
+ 139   1        CKCON |= 0x01;    //4分频率
+ 140   1      }
+ 141          /////////////////////////////////////////////////
+ 142          void ADC_Init (void)
+ 143          {
+ 144   1      //  AMX0SL = 0X80;//正端P0.0,负端GND
+ 145   1        AMX0SL = 0X81;//正端P0.1,负端GND
+ 146   1      //  ADC0CF = 0x01;//转换频率为6M（max），1倍增益
+ 147   1        ADC0CF = 0x09;//转换频率为6M（max），1倍增益  ,1/2系统时钟
+ 148   1      
+ 149   1      //  ADC0CF = 0x11;//转换频率为系统时钟1/2，1倍增益
+ 150   1      //  ADC0CF = 0x09;//转换频率为系统时钟1/3，1倍增益
+ 151   1      //  ADC0CF = 0x19;//转换频率为6M（max），1倍增益
+ 152   1        REF0CN = 0x0a;//VDD作为电压基准, 使能内部ADC参考电压
+ 153   1       // ADC0LT=0x40;//超过70LSB就认为过流(串2R)
+ 154   1        //EIE1=2;//允许ADC窗口比较匹配中断
+ 155   1        //EIP1=2;//ADC窗口比较匹配中断为高优先级
+ 156   1      //  AD0EN=1;//使能ADC
+ 157   1      
+ 158   1      
+ 159   1        ADC0CN  = 0x80;     //使能ADC0 工作于连续跟踪方式 向AD0BUSY写1启动AD
+ 160   1      }
+ 161          
+ 162          // 使用内部晶振，4分频
+ 163          void OSCILLATOR_Init (void)
+ 164          {     
+ 165   1        INT8U i;
+ 166   1        OSCICN   = 0x05;      //频率为24.5Mhz /4
+ 167   1      
+ 168   1      
+ 169   1        for(i = 250; i>0; i--);
+ 170   1        while((OSCICN & 0x10) == 0) ;   // 判断是否正常振荡
+ 171   1      }
+ 172          /**************************************************************************************************
+ 173          Port I/O initialization consists of the following steps:
+ 174          Step 1. Select the input mode (analog or digital) for all Port pins, using the Port0 Input Mode
+C51 COMPILER V9.52.0.0   800U_R3N3                                                         08/17/2016 14:54:30 PAGE 4   
+
+ 175          register (P0MDIN).
+ 176          Step 2. Select the output mode (open-drain or push-pull) for all Port pins, using the Port0 Output
+ 177          Mode register (P0MDOUT).
+ 178          Step 3. Set XBR0 to skip any pins selected as analog inputs or special functions.
+ 179          Step 4. Assign Port pins to desired peripherals.
+ 180          Step 5. Enable the Crossbar.
+ 181          ***************************************************************************************************/
+ 182          void PORT_Init (void)
+ 183          {  
+ 184   1      //   P0MDIN  = 0xFE;  // P0.0,为模拟输入  0=模拟输入，1=数字输入
+ 185   1        P0MDIN  = 0xFD; // P0.1,为模拟输入  0=模拟输入，1=数字输入
+ 186   1      //   P0MDOUT = 0x1C;  // P0.2,3,4为推挽输出方式
+ 187   1        P0MDOUT = 0x6D; // P0.0,2,3,5,6为推挽输出方式 
+ 188   1      //   XBR0    = 0x01;  // 跳过P0.0
+ 189   1          XBR0     = 0x02;  // 跳过P0.1   ，作为ADC输入
+ 190   1        XBR2    = 0X40; // 使能交叉开关，使能弱上拉
+ 191   1      //   P0    = 0x03;  // 关输出
+ 192   1      
+ 193   1        // 关掉发射管
+ 194   1        pOUTPUT   = OFF;                                               //
+ 195   1        pLEDOUTB  = OFF;  
+ 196   1        pLEDOUTG  = OFF;  
+ 197   1        pLEDOUTR  = OFF;  
+ 198   1        pEMILEDCTL  = OFF;       // 管关断
+ 199   1      }
+ 200          
+ 201          /////////////////////////////////////////////////
+ 202          
+ 203          // ADC 采集
+ 204          INT8U ADC_Samp (void)
+ 205          {
+ 206   1        INT8U tmp,dat;
+ 207   1        AD0INT  = 0;  //清除转换完成标志
+ 208   1        AD0BUSY = 1;  //启动一次转换
+ 209   1        dat = 0;
+ 210   1      //  for(tmp = 50;tmp > 0;tmp --)      // F300  2*nop + 19*3*nop + 2*nop = 61nop = 61*40ns*4=9.6us  
+ 211   1        for(tmp = 100;tmp > 0;tmp --)     // F300  2*nop + 19*3*nop + 2*nop = 61nop = 61*40ns*4=9.6us
+ 212   1        {
+ 213   2          if( 1 == AD0INT )//超过限流值关断一段时间
+ 214   2          {
+ 215   3            AD0INT = 0;
+ 216   3            AD0BUSY = 0;
+ 217   3            dat =   ADC0;
+ 218   3            break;
+ 219   3          }               
+ 220   2        }
+ 221   1        return(dat);
+ 222   1      }
+ 223          
+ 224          /**************************************************************************************************
+ 225          Timer0 10us中断一次，发射管开通时间为10us
+ 226          ***************************************************************************************************/
+ 227          
+ 228          void Timer0(void) interrupt 1         // 10us
+ 229          {
+ 230   1        count++;           // 对10us计数
+ 231   1      
+ 232   1        // 发射管打开
+ 233   1        if(f_FSLedOut == TRUE)
+ 234   1        {     
+ 235   2          pEMILEDCTL  = OFF;     // 管关断
+ 236   2          f_FSLedOut = FALSE;    // 管关断状态
+C51 COMPILER V9.52.0.0   800U_R3N3                                                         08/17/2016 14:54:30 PAGE 5   
+
+ 237   2          ledemicnt = FSLEDZKB;  // 下次开通时间
+ 238   2          
+ 239   2          if(sampcnt >= SAMPCNTMAX)
+ 240   2          { sampcnt = 0; }
+ 241   2      
+ 242   2          sampDat[sampcnt] = ADC_Samp();  // 采集高端数据 
+ 243   2          
+ 244   2      //    pEMILEDCTL  = OFF;     // 管关断   
+ 245   2        }                
+ 246   1        else
+ 247   1          {
+ 248   2          // 发射管关闭后10us采集低端 
+ 249   2          if(ledemicnt == FSLEDZKB)//判断有没有检测到一个脉冲       
+ 250   2            {
+ 251   3            if(sampcnt >= SAMPCNTMAX)
+ 252   3            { sampcnt = 0; }
+ 253   3      
+ 254   3            DsampDat[sampcnt] = ADC_Samp();   // 采集低端数据
+ 255   3              
+ 256   3            sampcnt++;              // 采集存储位置+1
+ 257   3            f_pross = TRUE;           // 1次高低端完整采集完成标志
+ 258   3      
+ 259   3            // 采集够一定的点数做一次判断
+ 260   3            if(prosscnt++ >= PROSSCNT)
+ 261   3            {
+ 262   4              f_prossout = TRUE;         // 处理一次输出标志
+ 263   4              prosscnt = 0;          // 计数清0
+ 264   4            }   
+ 265   3          } 
+ 266   2      
+ 267   2          // 关掉间隔时间到，打开发射管
+ 268   2          if(0 == (ledemicnt--))
+ 269   2          {
+ 270   3            
+ 271   3            pEMILEDCTL = ON;       // 发射管打开
+ 272   3            f_FSLedOut = TRUE;         // 发射管打开状态
+ 273   3      
+ 274   3      //      if(sampcnt >= SAMPCNTMAX)
+ 275   3      //      { sampcnt = 0; }
+ 276   3      //
+ 277   3      //      DsampDat[sampcnt] = ADC_Samp();   // 采集低端数据
+ 278   3      
+ 279   3          }
+ 280   2        }
+ 281   1      }
+ 282          
+ 283          
+ 284          
+ 285          /////////////////////////////////////////////////
+ 286          void main(void)
+ 287          { 
+ 288   1        PCA0MD &= ~0x40;             //看门狗定时器被禁止
+ 289   1        RSTSRC |= 0x02;            //使能VDD电压监视
+ 290   1        OSCILLATOR_Init();           // Initialize the system clock
+ 291   1        PORT_Init ();            // Initialize crossbar and GPIO
+ 292   1        
+ 293   1        // 开灯 
+ 294   1        pLEDOUTR = ON;  
+ 295   1        delay_Xms(500); 
+ 296   1        pLEDOUTR = OFF; 
+ 297   1      
+ 298   1        pLEDOUTG = ON;  
+C51 COMPILER V9.52.0.0   800U_R3N3                                                         08/17/2016 14:54:30 PAGE 6   
+
+ 299   1        delay_Xms(500);
+ 300   1        pLEDOUTG = OFF;
+ 301   1          
+ 302   1        pLEDOUTB = ON;  
+ 303   1        delay_Xms(500); 
+ 304   1        pLEDOUTB = OFF;
+ 305   1                                               
+ 306   1                                                                                           //
+ 307   1        Timer0_Init ();            // Timer0 自动重装模式2
+ 308   1        ADC_Init ();             // 设置ADC
+ 309   1      //  Comparator0_Init();          // Initialize Comparator0
+ 310   1      //  OSCILLATOR_Init();           // Initialize the system clock
+ 311   1      //  Interrupt_Init ();            
+ 312   1      
+ 313   1        //  采集基准值
+ 314   1        {
+ 315   2          INT8U cnt,i;
+ 316   2          INT16U  sum = 0;  
+ 317   2          for(cnt = 128;cnt > 0;cnt-- )
+ 318   2          { 
+ 319   3            sum += ADC_Samp(); 
+ 320   3            for(i = 50; i > 0; i--) ; // 延时
+ 321   3          }
+ 322   2          RevBase =  sum/128;
+ 323   2        }
+ 324   1      //  RevBase =  111;
+ 325   1      
+ 326   1        PCA0CPL2 = 30;        // 33ms
+ 327   1        PCA0MD  |= 0x60;        // 看门狗定时器被启用 ，锁定看门狗
+ 328   1           
+ 329   1        out    = 0;         // 遮挡有效个数
+ 330   1      //  timinc = 0;  
+ 331   1      //  occnt  = 0;
+ 332   1        f_pross = FALSE;      // 清完整采集完成标标志
+ 333   1        Interrupt_Init ();      // 开中断
+ 334   1        while(1)
+ 335   1        {
+ 336   2          INT8U  dat0,dat1,dif;
+ 337   2          
+ 338   2          PCA0CPH2 = 1;//喂狗
+ 339   2      
+ 340   2          // 如果一次完整采集完成
+ 341   2          if( (f_pross == TRUE)&&(sampcnt > 0) )
+ 342   2          {
+ 343   3             f_pross = FALSE;      // 清完整采集完成标标志
+ 344   3      
+ 345   3             // 保证数组不超界
+ 346   3             if(sampcnt >= SAMPCNTMAX)
+ 347   3             {  sampcnt = SAMPCNTMAX; }
+ 348   3      
+ 349   3             // 高端-低端 ，保存入difDat[]
+ 350   3             dat0 = sampDat[sampcnt-1];
+ 351   3             dat1 = DsampDat[sampcnt-1];
+ 352   3             
+ 353   3             if(dat0 > dat1)
+ 354   3                { dif = dat0 - dat1; }
+ 355   3             else { dif = dat1 - dat0; }
+ 356   3      
+ 357   3             difDat[sampcnt-1] = dif ;
+ 358   3      
+ 359   3             // 取高端和低端与均值差值最大的存入dat0
+ 360   3             if(dat0 > RevBase)
+C51 COMPILER V9.52.0.0   800U_R3N3                                                         08/17/2016 14:54:30 PAGE 7   
+
+ 361   3                { dat0 = dat0 - RevBase; }
+ 362   3             else { dat0 = RevBase - dat0; }
+ 363   3      
+ 364   3             if(dat1 > RevBase)
+ 365   3                { dat1 = dat1 - RevBase; }
+ 366   3             else { dat1 = RevBase - dat1; }
+ 367   3      
+ 368   3             if(dat0 < dat1) { dat0 = dat1 ; }
+ 369   3      
+ 370   3             // 如果差值大于稳定值，或者单端-均值大于稳定值一半有多，则out+1，确认为遮挡
+ 371   3             if( (dif >= WDVAL)||(dat0 >= (WDVAL/2+5)) )
+ 372   3             { out++; }
+ 373   3             // 如果差值小于无信号值，而且单端-均值大于稳定值一半有多，则out-1，确认为无遮挡
+ 374   3             else if((dif <= NOVAL)&&(dat0 <= NOVAL))
+ 375   3             { if(out > 0)out--; }
+ 376   3      
+ 377   3             // 如果差值大于遮挡临界值，或者单端-均值大于临界值一半有多，则buwendin+1
+ 378   3             if((dif >= WDSSVAL)||(dat0 >= (WDSSVAL/2+5)))
+ 379   3             { buwendin++; }
+ 380   3              // 如果无输出，且差值小于无遮挡临界值，且单端-均值大于临界值一半有多，则buwendin+1
+ 381   3             else  if((f_OUT == FALSE)&&(dif <= NOSSVAL)&&(dat0 <= NOSSVAL))
+ 382   3             { if(buwendin > 0)buwendin--; }
+ 383   3      
+ 384   3             // 确保确认遮挡个数不超判断条件
+ 385   3             if( out > PROSSCNT )   
+ 386   3             { out = PROSSCNT; }
+ 387   3      
+ 388   3             // 确保确认不稳定个数不超判断条件
+ 389   3             if( buwendin > PROSSCNT )   
+ 390   3             { buwendin = PROSSCNT; }   
+ 391   3          }
+ 392   2      
+ 393   2          // 处理一次输出标志，采集一定脉冲数再处理，每2ms处理一次
+ 394   2          if(f_prossout == TRUE)
+ 395   2          {
+ 396   3            f_prossout = FALSE;    // 清处理一次输出标志
+ 397   3      
+ 398   3            f_shanshuo = FALSE;    // 清闪烁标志
+ 399   3      
+ 400   3            // 判断遮挡有效次数，没有则关闭输出
+ 401   3            if(out <= 1)    //1
+ 402   3              { 
+ 403   4                f_OUT = FALSE;       // 清输出有效标志
+ 404   4              pOUTPUT = OFF;       // 关输出
+ 405   4                pLEDOUTG  = OFF;       // 关状态指示灯
+ 406   4            } 
+ 407   3            // 大于采集一半则认为有效
+ 408   3            else if(out > PROSSCNT/2)
+ 409   3              {
+ 410   4              f_OUT   = TRUE;      // 置输出有效标志
+ 411   4              pOUTPUT = ON;      // 开输出
+ 412   4              pLEDOUTG  = ON;      // 开状态指示灯        
+ 413   4            }
+ 414   3            else if(buwendin > PROSSCNT/2)  //8
+ 415   3            { 
+ 416   4              f_shanshuo = TRUE;    // 置闪烁标志
+ 417   4              count = 0;        // 清计数时间 
+ 418   4            }
+ 419   3      
+ 420   3      
+ 421   3            // LED状态指示灯闪烁
+ 422   3            if(f_shanshuo == TRUE)
+C51 COMPILER V9.52.0.0   800U_R3N3                                                         08/17/2016 14:54:30 PAGE 8   
+
+ 423   3            {
+ 424   4              if(count >= 20000)
+ 425   4                { pLEDOUTG = ON; }
+ 426   4              else{ pLEDOUTG = OFF; }
+ 427   4      
+ 428   4              if( count >= 40000 )
+ 429   4              { count = 0;   }
+ 430   4            }
+ 431   3          }
+ 432   2        } 
+ 433   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    700    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10       4
+   IDATA SIZE       =    150    ----
+   BIT SIZE         =      5    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

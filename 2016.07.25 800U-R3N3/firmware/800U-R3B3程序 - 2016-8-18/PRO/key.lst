@@ -1,0 +1,58 @@
+C51 COMPILER V9.52.0.0   KEY                                                               08/31/2016 09:44:49 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\key.obj
+COMPILER INVOKED BY: C:\Program Files\kile\C51\BIN\C51.EXE ..\SRC\key.c OMF2 BROWSE INCDIR(..\INC;..\PRO;..\SRC) DEBUG P
+                    -RINT(.\key.lst) TABS(2) OBJECT(.\key.obj)
+
+line level    source
+
+   1          #define KEY_GLOBAL
+   2          #include "include.h"
+   3          UINT8  KeyStatus_flag = 0;
+   4          //////////////////////////////////////////////////////////////////////////////////
+   5          //// 功能描述 : 按键状态监测
+   6          //// 输入参数 : 
+   7          //// 返回参数 : 
+   8          //// 说明     :  
+   9          //////////////////////////////////////////////////////////////////////////////////
+  10          void key_status()
+  11          {
+  12   1          if((f_prossout == TRUE)&&(basecount>100)) //按键检测机制 限定是在基准采样完后再做比较
+  13   1          { 
+  14   2             f_prossout = FALSE;
+  15   2             if((sampDat-RevBase)>Dval)
+  16   2               out++;
+  17   2             else
+  18   2               out=0; 
+  19   2          }   
+  20   1          if(out>Dnum)           //有按键
+  21   1          {
+  22   2             out=100;
+  23   2             KeyStatus = ON;      
+  24   2          }
+  25   1          else
+  26   1             KeyStatus = OFF;
+  27   1      }
+  28          
+  29          
+  30          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

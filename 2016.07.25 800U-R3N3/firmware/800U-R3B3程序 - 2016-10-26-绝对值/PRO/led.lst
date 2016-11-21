@@ -1,0 +1,173 @@
+C51 COMPILER V9.52.0.0   LED                                                               11/14/2016 14:13:36 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE LED
+OBJECT MODULE PLACED IN .\led.obj
+COMPILER INVOKED BY: C:\Program Files\kile\C51\BIN\C51.EXE ..\SRC\led.c OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(..\INC) DEB
+                    -UG PRINT(.\led.lst) TABS(2) OBJECT(.\led.obj)
+
+line level    source
+
+   1          #define LED_GLOBAL
+   2          #include "include.h"
+   3          UINT8  KeyStatus = OFF;   //按键状态
+   4          INT8U LedStatus = LED_NONE;   //灯状态
+   5          INT16U  LedDelayCnt = 0;
+   6          //////////////////////////////////////////////////////////////////////////////////
+   7          //// 功能描述 : LED上电完成灯闪烁
+   8          //// 输入参数 : 
+   9          //// 返回参数 : 
+  10          //// 说明     :  
+  11          //////////////////////////////////////////////////////////////////////////////////
+  12          void led_blink(void)
+  13          {
+  14   1        LED_R_ON ;
+  15   1        delay_ms(1000); 
+  16   1        LED_R_OFF ; 
+  17   1      
+  18   1      
+  19   1        LED_G_ON ;  
+  20   1        delay_ms(1000);
+  21   1        LED_G_OFF ;
+  22   1          
+  23   1        LED_B_ON; 
+  24   1        delay_ms(1000); 
+  25   1        LED_G_OFF ;
+  26   1      }
+  27          //////////////////////////////////////////////////////////////////////////////////
+  28          //// 功能描述 : ADC基准电压采集错误LED灯闪烁 机制
+  29          //// 输入参数 : 
+  30          //// 返回参数 : 
+  31          //// 说明     :  
+  32          //////////////////////////////////////////////////////////////////////////////////
+  33          void ADC_BASE_ERR_BLINK(void)
+  34          {
+  35   1              
+  36   1              
+  37   1              if(ADC_BaseLedState == ON)
+  38   1              {
+  39   2                 ADC_BASE_ERR_ON();
+  40   2                 ADC_BaseLedState = OFF;
+  41   2                 
+  42   2                 ADC_BaseErrNum = ADC_BaseErrNumIintON;    //赋值LED闪烁时间 在定时器里进行减值
+  43   2              }
+  44   1              else if(ADC_BaseLedState == OFF)
+  45   1              {
+  46   2                 ADC_BASE_ERR_OFF();
+  47   2                 ADC_BaseLedState = ON;
+  48   2                 
+  49   2                 ADC_BaseErrNum = ADC_BaseErrNumIintOFF;   //赋值LED闪烁时间 在定时器里进行减值
+  50   2              }
+  51   1              //ADC_BaseErrNu=0 ;
+  52   1      }
+  53          //////////////////////////////////////////////////////////////////////////////////
+  54          //// 功能描述 : ADC基准电压采集错误LED灯闪烁
+C51 COMPILER V9.52.0.0   LED                                                               11/14/2016 14:13:36 PAGE 2   
+
+  55          //// 输入参数 : 
+  56          //// 返回参数 : 
+  57          //// 说明     :  
+  58          //////////////////////////////////////////////////////////////////////////////////
+  59          void ADC_BASE_ERR_ON(void)
+  60          {
+  61   1          LED_R_ON ;
+  62   1          LED_B_OFF;
+  63   1          LED_G_OFF;
+  64   1      }
+  65          //////////////////////////////////////////////////////////////////////////////////
+  66          //// 功能描述 : ADC基准电压采集错误LED灯闪烁
+  67          //// 输入参数 : 
+  68          //// 返回参数 : 
+  69          //// 说明     :  
+  70          //////////////////////////////////////////////////////////////////////////////////
+  71          void ADC_BASE_ERR_OFF(void)
+  72          {
+  73   1          LED_R_OFF ;
+  74   1          LED_B_OFF;
+  75   1          LED_G_OFF;
+  76   1      }
+  77          
+  78          //////////////////////////////////////////////////////////////////////////////////
+  79          //// 功能描述 : IO初始化
+  80          //// 输入参数 : 
+  81          //// 返回参数 : 
+  82          //// 说明     :  
+  83          //////////////////////////////////////////////////////////////////////////////////
+  84          void PORT_Init (void)
+  85          { 
+  86   1        P0MDIN  &= ~0x02;     // P0.1,为模拟输入  0=模拟输入，1=数字输入
+  87   1        P0MDIN  |= 0x10;      // P0.4 DIGITAL INPUT
+  88   1        P0MDOUT |= 0x28;      // P0.3,5,为推挽输出方式  
+  89   1        P0MDOUT &= ~(0x45);   // P0.1,2,6为Open Drain输出方式 
+  90   1        XBR0    |= 0x3F;      // 跳过使用的IO口P0.0 1 2 3 5 6   
+  91   1        XBR2    |= 0X40;      // 使能交叉开关，使能弱上拉
+  92   1      
+  93   1        
+  94   1        pOUTPUT   = OFF;      // 关掉输出
+  95   1        LED_G_OFF ;   
+  96   1        LED_B_OFF ;
+  97   1        LED_R_OFF ;
+  98   1           
+  99   1        pEMILEDCTL = OFF;     //发射管关断
+ 100   1      }
+ 101          //////////////////////////////////////////////////////////////////////////////////
+ 102          //// 功能描述 : led控制
+ 103          //// 输入参数 : 
+ 104          //// 返回参数 : 
+ 105          //// 说明     :  
+ 106          //////////////////////////////////////////////////////////////////////////////////
+ 107          void led_light_ctrl(INT8U leds)
+ 108          {
+ 109   1        switch (leds)
+ 110   1        {
+ 111   2          case LED_RED:     LED_G_OFF; LED_B_OFF;  LED_R_ON;  break;    
+ 112   2          case LED_GREEN:   LED_R_OFF; LED_B_OFF;  LED_G_ON;  break;
+ 113   2          case LED_BLUE:    LED_R_OFF; LED_G_OFF;  LED_B_ON;  break;
+ 114   2          
+ 115   2          case LED_RG:      LED_B_OFF; LED_R_ON;   LED_G_ON;  break;    
+ 116   2          case LED_RB:      LED_G_OFF; LED_R_ON;   LED_B_ON;  break;
+C51 COMPILER V9.52.0.0   LED                                                               11/14/2016 14:13:36 PAGE 3   
+
+ 117   2          case LED_GB:      LED_R_OFF; LED_G_ON;   LED_B_ON;  break;
+ 118   2          case LED_RGB:     LED_R_ON;  LED_G_ON;   LED_B_ON;  break;      
+ 119   2          default:          LED_R_OFF; LED_G_OFF; LED_B_OFF;  break;
+ 120   2        }
+ 121   1      }
+ 122          //////////////////////////////////////////////////////////////////////////////////
+ 123          //// 功能描述 : led闪烁控制
+ 124          //// 输入参数 : 
+ 125          //// 返回参数 : 
+ 126          //// 说明     :  
+ 127          //////////////////////////////////////////////////////////////////////////////////
+ 128          void CMD_led_flash(void)
+ 129          {
+ 130   1        if(LedStatus != LED_NONE)
+ 131   1        {
+ 132   2      
+ 133   2            led_light_ctrl(LedStatus);      // 仅点亮对应颜色
+ 134   2      
+ 135   2        }
+ 136   1        else//当前不显示
+ 137   1        {
+ 138   2            led_light_ctrl(LED_NONE); 
+ 139   2        }
+ 140   1      }
+ 141          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    201    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,4 @@
+".\main.obj",
+".\CBM7008.obj" 
+TO "800U-P3N3 IO_V1.0" 
+PRINT(".\src\800U-P3N3 IO_V1.m51")

@@ -1,0 +1,156 @@
+Protel Design System Design Rule Check
+PCB File : F:\项目开发\2016\800U-R3N3\PCB1.PcbDoc
+Date     : 2016/4/18
+Time     : 14:50:59
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0.254mm) (All),(All)
+   Violation between Track (99.187mm,85.852mm)(99.927mm,85.852mm)  Top Layer and 
+                     Pad U2-10(99.187mm,86.36mm)  Top Layer
+   Violation between Pad U2-9(99.187mm,85.852mm)  Top Layer and 
+                     Pad U2-10(99.187mm,86.36mm)  Top Layer
+   Violation between Track (99.187mm,86.36mm)(99.635mm,86.36mm)  Top Layer and 
+                     Pad U2-9(99.187mm,85.852mm)  Top Layer
+   Violation between Track (99.635mm,86.36mm)(99.75mm,86.475mm)  Top Layer and 
+                     Pad U2-9(99.187mm,85.852mm)  Top Layer
+   Violation between Track (99.187mm,85.344mm)(100.869mm,85.344mm)  Top Layer and 
+                     Pad U2-9(99.187mm,85.852mm)  Top Layer
+   Violation between Pad U2-8(99.187mm,85.344mm)  Top Layer and 
+                     Pad U2-9(99.187mm,85.852mm)  Top Layer
+   Violation between Track (99.187mm,84.836mm)(101.386mm,84.836mm)  Top Layer and 
+                     Pad U2-8(99.187mm,85.344mm)  Top Layer
+   Violation between Pad U2-7(99.187mm,84.836mm)  Top Layer and 
+                     Pad U2-8(99.187mm,85.344mm)  Top Layer
+   Violation between Track (99.187mm,85.852mm)(99.927mm,85.852mm)  Top Layer and 
+                     Pad U2-8(99.187mm,85.344mm)  Top Layer
+   Violation between Track (99.187mm,84.328mm)(100.397mm,84.328mm)  Top Layer and 
+                     Pad U2-7(99.187mm,84.836mm)  Top Layer
+   Violation between Pad U2-6(99.187mm,84.328mm)  Top Layer and 
+                     Pad U2-7(99.187mm,84.836mm)  Top Layer
+   Violation between Track (99.187mm,85.344mm)(100.869mm,85.344mm)  Top Layer and 
+                     Pad U2-7(99.187mm,84.836mm)  Top Layer
+   Violation between Track (99.187mm,84.836mm)(101.386mm,84.836mm)  Top Layer and 
+                     Pad U2-6(99.187mm,84.328mm)  Top Layer
+   Violation between Pad U2-4(96.901mm,84.836mm)  Top Layer and 
+                     Pad U2-5(96.901mm,84.328mm)  Top Layer
+   Violation between Track (95.586mm,84.836mm)(96.901mm,84.836mm)  Top Layer and 
+                     Pad U2-5(96.901mm,84.328mm)  Top Layer
+   Violation between Track (95.978mm,84.328mm)(96.901mm,84.328mm)  Top Layer and 
+                     Pad U2-4(96.901mm,84.836mm)  Top Layer
+   Violation between Pad U2-3(96.901mm,85.344mm)  Top Layer and 
+                     Pad U2-4(96.901mm,84.836mm)  Top Layer
+   Violation between Track (95.1mm,85.344mm)(96.901mm,85.344mm)  Top Layer and 
+                     Pad U2-4(96.901mm,84.836mm)  Top Layer
+   Violation between Pad U2-2(96.901mm,85.852mm)  Top Layer and 
+                     Pad U2-3(96.901mm,85.344mm)  Top Layer
+   Violation between Track (95.586mm,84.836mm)(96.901mm,84.836mm)  Top Layer and 
+                     Pad U2-3(96.901mm,85.344mm)  Top Layer
+   Violation between Track (93.373mm,85.852mm)(96.901mm,85.852mm)  Top Layer and 
+                     Pad U2-3(96.901mm,85.344mm)  Top Layer
+   Violation between Track (96.015mm,86.36mm)(96.901mm,86.36mm)  Top Layer and 
+                     Pad U2-2(96.901mm,85.852mm)  Top Layer
+   Violation between Pad U2-1(96.901mm,86.36mm)  Top Layer and 
+                     Pad U2-2(96.901mm,85.852mm)  Top Layer
+   Violation between Track (95.1mm,85.344mm)(96.901mm,85.344mm)  Top Layer and 
+                     Pad U2-2(96.901mm,85.852mm)  Top Layer
+   Violation between Track (93.373mm,85.852mm)(96.901mm,85.852mm)  Top Layer and 
+                     Pad U2-1(96.901mm,86.36mm)  Top Layer
+   Violation between Track (80.975mm,82mm)(81.1222mm,82mm)  Top Layer and 
+                     Pad U1-4(81.1772mm,81.945mm)  Top Layer
+   Violation between Track (80.975mm,82mm)(81.1222mm,82mm)  Top Layer and 
+                     Track (79.245mm,81.945mm)(81.1772mm,81.945mm)  Top Layer
+   Violation between Track (81.1772mm,81.945mm)(81.905mm,81.945mm)  Top Layer and 
+                     Track (80.975mm,82mm)(81.1222mm,82mm)  Top Layer
+   Violation between Track (81.1772mm,81.945mm)(83.445mm,81.945mm)  Top Layer and 
+                     Track (80.975mm,82mm)(81.1222mm,82mm)  Top Layer
+   Violation between Via (94.1324mm,85.075mm) Top Layer to Bottom Layer and 
+                     Track (93.373mm,85.852mm)(96.901mm,85.852mm)  Top Layer
+Rule Violations :30
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=0.254mm) (Max=1.016mm) (Preferred=0.254mm) (All)
+Rule Violations :0
+
+Processing Rule : Routing Via (MinHoleWidth=0.7112mm) (MaxHoleWidth=0.7112mm) (PreferredHoleWidth=0.7112mm) (MinWidth=1.27mm) (MaxWidth=1.27mm) (PreferedWidth=1.27mm) (All)
+   Violation between Routing Via Style: Via (89.2mm,89.025mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (85.375mm,89.3mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (73.625mm,95.725mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (79mm,81.7mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (94.1324mm,85.075mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (97.875mm,79.6mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (105.225mm,100.45mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (105.225mm,101.88333mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (107.746mm,101.88333mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (107.746mm,103.31666mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (93.075mm,99.85mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (105.125mm,104.774mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (110mm,101.88333mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (110mm,100.45mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (110mm,103.31666mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (110mm,104.774mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (107.746mm,100.45mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (107.746mm,104.774mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (105.225mm,103.31666mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (129.125mm,77.4mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (129.85mm,91.125mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (129.425mm,83.75mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (97.65mm,78.075mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (100.725mm,68.625mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (98.2mm,75mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (120.5mm,67.825mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (120.625mm,76.925mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (120.7mm,84.025mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (105.1mm,82.675mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (107.87mm,91.2mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (102mm,93.475mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (78.2mm,97.325mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (120.6mm,72.45mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (96.5mm,82.725mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (97.75mm,87.95mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (97.35mm,98.9mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (73.625mm,83.675mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (88.424mm,78.524mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (95.425mm,59mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (113.65555mm,84.60413mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (128mm,64.77501mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (126.775mm,56.625mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (109.025mm,77.475mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (108.85mm,74.075mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (108.575mm,70.475mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (115.175mm,49.875mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (106.4802mm,64.90317mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (106.575mm,63.19999mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (107.05mm,61.225mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (106.525mm,55.25mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (106.65mm,53.475mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (107.034mm,51.625mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (101.025mm,55.525mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (101.175mm,61.3mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (100.98mm,63.155mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (100.725mm,65.175mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (100.95493mm,53.65262mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (101.066mm,51.816mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (83.095mm,85.755mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (86.075mm,75.25mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (94.1mm,89.325mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (90.424mm,79.6mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (83.5mm,89.675mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (117.275mm,92.4mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (119.55mm,100.55mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (100.75mm,87.225mm) Top Layer to Bottom Layer
+   Violation between Routing Via Style: Via (103.7mm,79.625mm) Top Layer to Bottom Layer
+Rule Violations :67
+
+Processing Rule : Differential Pairs Uncoupled Length using the Gap Constraints (Min=0.254mm) (Max=0.254mm) (Preferred=0.254mm) (All)
+Rule Violations :0
+
+
+Violations Detected : 97
+Time Elapsed        : 00:00:00

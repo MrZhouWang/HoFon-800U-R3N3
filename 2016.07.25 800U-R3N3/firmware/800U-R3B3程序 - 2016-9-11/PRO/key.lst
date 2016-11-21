@@ -1,0 +1,59 @@
+C51 COMPILER V9.52.0.0   KEY                                                               10/28/2016 14:46:38 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\key.obj
+COMPILER INVOKED BY: C:\Program Files\kile\C51\BIN\C51.EXE ..\SRC\key.c OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(..\INC;..\P
+                    -RO;..\SRC) DEBUG PRINT(.\key.lst) TABS(2) OBJECT(.\key.obj)
+
+line level    source
+
+   1          #define KEY_GLOBAL
+   2          #include "include.h"
+   3          UINT8  KeyStatus_flag = 0;
+   4          //////////////////////////////////////////////////////////////////////////////////
+   5          //// 功能描述 : 按键状态监测
+   6          //// 输入参数 : 
+   7          //// 返回参数 : 
+   8          //// 说明     :  
+   9          //////////////////////////////////////////////////////////////////////////////////
+  10          void key_status()
+  11          {
+  12   1          if((f_prossout == TRUE)&&(AD_Base == OK)) //按键检测机制 限定是在基准采样完后再做比较
+  13   1          { 
+  14   2             f_prossout = FALSE;
+  15   2             
+  16   2             if((sampDat>RevBase)&&(sampDat-RevBase)>Dval)
+  17   2               out++;
+  18   2             else                //如果遮挡时间无效 重新计时
+  19   2               out=0; 
+  20   2          }   
+  21   1          if(out>Dnum)           //有按键
+  22   1          {
+  23   2             out=Dnum+1;
+  24   2             KeyStatus = ON;      
+  25   2          }
+  26   1          else
+  27   1             KeyStatus = OFF;
+  28   1      }
+  29          
+  30          
+  31          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     65    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

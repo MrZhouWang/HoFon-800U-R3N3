@@ -1,0 +1,83 @@
+C51 COMPILER V9.52.0.0   ADC                                                               08/19/2016 14:13:56 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE ADC
+OBJECT MODULE PLACED IN .\adc.obj
+COMPILER INVOKED BY: C:\Program Files\kile\C51\BIN\C51.EXE ..\SRC\adc.c OMF2 BROWSE INCDIR(..\INC;..\PRO;..\SRC) DEBUG P
+                    -RINT(.\adc.lst) TABS(2) OBJECT(.\adc.obj)
+
+line level    source
+
+   1          #include "include.h"
+   2          //////////////////////////////////////////////////////////////////////////////////
+   3          //// 功能描述 : ADC初始化
+   4          //// 输入参数 : 
+   5          //// 返回参数 : 
+   6          //// 说明     :  
+   7          //////////////////////////////////////////////////////////////////////////////////
+   8          void ADC_Init (void)
+   9          {
+  10   1        AMX0SL = 0X81;      //正端P0.1,负端GND
+  11   1        ADC0CF = 0x09;      //转换频率为3M（6M max），1倍增益  ,1/2系统时钟 !!!
+  12   1        REF0CN = 0x0a;      //VDD作为电压基准, 使能内部ADC参考电压
+  13   1        ADC0CN  = 0x80;     //使能ADC0 工作于连续跟踪方式 向AD0BUSY写1启动AD
+  14   1      }
+  15          //////////////////////////////////////////////////////////////////////////////////
+  16          //// 功能描述 : ADC采集一次
+  17          //// 输入参数 : 
+  18          //// 返回参数 : 
+  19          //// 说明     :  
+  20          //////////////////////////////////////////////////////////////////////////////////
+  21          INT8U ADC_Samp (void)
+  22          {
+  23   1        INT8U tmp,dat;
+  24   1        AD0INT  = 0;  //清除转换完成标志
+  25   1        AD0BUSY = 1;  //启动一次转换
+  26   1        dat = 0;
+  27   1        for(tmp = 100;tmp > 0;tmp --)     // F300  2*nop + 19*3*nop + 2*nop = 61nop = 61*40ns*4=9.6us
+  28   1        {
+  29   2          if( 1 == AD0INT )//超过限流值关断一段时间
+  30   2          {
+  31   3            AD0INT = 0;
+  32   3            AD0BUSY = 0;
+  33   3            dat =   ADC0;
+  34   3            break;
+  35   3          }               
+  36   2        }
+  37   1        return(dat);
+  38   1      }
+  39          //////////////////////////////////////////////////////////////////////////////////
+  40          //// 功能描述 : 采集基准电压
+  41          //// 输入参数 : 
+  42          //// 返回参数 : 
+  43          //// 说明     :  
+  44          //////////////////////////////////////////////////////////////////////////////////
+  45          void Base_ADC()
+  46          {
+  47   1          INT8U cnt;
+  48   1          pEMILEDCTL = ON;       // 发射管打开  
+  49   1          cnt++;
+  50   1          RevBase = ADC_Samp();  // 采集基端数据
+  51   1          pEMILEDCTL = OFF;      // 发射管关闭
+  52   1           
+  53   1      }
+
+C51 COMPILER V9.52.0.0   ADC                                                               08/19/2016 14:13:56 PAGE 2   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     47    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

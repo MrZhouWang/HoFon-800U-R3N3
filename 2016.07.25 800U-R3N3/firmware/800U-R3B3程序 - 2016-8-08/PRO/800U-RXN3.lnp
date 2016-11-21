@@ -1,0 +1,10 @@
+"STARTUP.obj",
+".\timer.obj",
+".\adc.obj",
+".\led.obj",
+".\main.obj",
+".\delay.obj",
+".\init.obj",
+".\exti.obj" 
+TO "800U-RXN3" 
+

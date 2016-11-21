@@ -1,0 +1,325 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        08/25/2015  15:04:15  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\PROGRAM FILES\KEIL4\C51\BIN\BL51.EXE .\main.obj, .\CBM7008.obj TO 800U-P3N3 IO_V2.1 PRINT (.\src\800U-P3N3 IO_V2.m51)
+>> 
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\main.obj (MAIN)
+  .\CBM7008.obj (CBM7008)
+  D:\PROGRAM FILES\KEIL4\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\PROGRAM FILES\KEIL4\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  800U-P3N3 IO_V2.1 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         ?DT?MAIN
+            IDATA   000AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0008H     UNIT         ?PR?T0_INT?MAIN
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    009AH     0086H     UNIT         ?PR?MAIN?MAIN
+            CODE    0120H     0019H     UNIT         ?PR?IO_INIT?MAIN
+            CODE    0139H     0018H     UNIT         ?PR?_DELAYMS?MAIN
+            CODE    0151H     0013H     UNIT         ?PR?TIMER0INIT?MAIN
+            CODE    0164H     000EH     UNIT         ?PR?DELAY1MS?MAIN
+            CODE    0172H     000DH     UNIT         ?PR?KEYCHECK?MAIN
+            CODE    017FH     0009H     UNIT         ?PR?_RED_LIGHT_CTRL?MAIN
+            CODE    0188H     0009H     UNIT         ?PR?_GREEN_LIGHT_CTRL?MAIN
+            CODE    0191H     0007H     UNIT         ?C_INITSEG
+            CODE    0198H     0004H     UNIT         ?PR?WDT_RESET?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   800U-P3N3 IO_V2.1 (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?IO_INIT?MAIN
+  +--> ?PR?WDT_RESET?MAIN
+  +--> ?PR?_DELAYMS?MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/25/2015  15:04:15  PAGE 2
+
+
+  +--> ?PR?TIMER0INIT?MAIN
+  +--> ?PR?KEYCHECK?MAIN
+  +--> ?PR?_RED_LIGHT_CTRL?MAIN
+  +--> ?PR?_GREEN_LIGHT_CTRL?MAIN
+
+?PR?_DELAYMS?MAIN
+  +--> ?PR?DELAY1MS?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  800U-P3N3 IO_V2.1 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0092H         PUBLIC        P1M0
+  D:0091H         PUBLIC        P1M1
+  D:0080H         PUBLIC        P0
+  D:00B2H         PUBLIC        P3M0
+  D:0090H         PUBLIC        P1
+  D:00B1H         PUBLIC        P3M1
+  D:00A0H         PUBLIC        P2
+  D:00CAH         PUBLIC        P5M0
+  D:00B0H         PUBLIC        P3
+  D:00C9H         PUBLIC        P5M1
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  B:00A8H.7       PUBLIC        EA
+  B:0090H.3       PUBLIC        p_button_output
+  C:0172H         PUBLIC        KeyCheck
+  B:00B0H.6       PUBLIC        p_singal_out
+  D:00A8H         PUBLIC        IE
+  C:0120H         PUBLIC        IO_Init
+  D:00B8H         PUBLIC        IP
+  B:0090H.4       PUBLIC        p_signal_enable
+  D:00D8H         PUBLIC        CCON
+  C:009AH         PUBLIC        main
+  C:0188H         PUBLIC        _green_light_ctrl
+  C:0003H         PUBLIC        T0_int
+  D:0008H         PUBLIC        KeyStatus
+  C:0139H         PUBLIC        _DelayMs
+  D:0098H         PUBLIC        SCON
+  B:0090H.0       PUBLIC        p_KEY_OK
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:00F0H         PUBLIC        B
+  D:008EH         PUBLIC        AUXR
+  B:0090H.1       PUBLIC        p_mcu_ctr
+  D:00E0H         PUBLIC        ACC
+  B:00A8H.1       PUBLIC        ET0
+  B:0088H.5       PUBLIC        TF0
+  C:0151H         PUBLIC        Timer0Init
+  D:008CH         PUBLIC        TH0
+  C:017FH         PUBLIC        _red_light_ctrl
+  D:008AH         PUBLIC        TL0
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/25/2015  15:04:15  PAGE 3
+
+
+  C:0198H         PUBLIC        WDT_Reset
+  B:0088H.4       PUBLIC        TR0
+  D:00C1H         PUBLIC        WDT_CONTR
+  C:0164H         PUBLIC        Delay1Ms
+  B:00B0H.7       PUBLIC        p_signal_input
+  D:0009H         PUBLIC        sysStatus
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          DELAY1MS
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0164H         LINE#         61
+  C:0164H         LINE#         62
+  C:0164H         LINE#         63
+  C:0168H         LINE#         64
+  C:0171H         LINE#         65
+  -------         ENDPROC       DELAY1MS
+  -------         PROC          _DELAYMS
+  D:0004H         SYMBOL        usDelay
+  C:0139H         LINE#         73
+  C:013DH         LINE#         74
+  C:013DH         LINE#         75
+  C:0146H         LINE#         76
+  C:0146H         LINE#         77
+  C:0149H         LINE#         78
+  C:0150H         LINE#         79
+  -------         ENDPROC       _DELAYMS
+  -------         PROC          TIMER0INIT
+  C:0151H         LINE#         92
+  C:0151H         LINE#         93
+  C:0151H         LINE#         94
+  C:0154H         LINE#         95
+  C:0157H         LINE#         96
+  C:015AH         LINE#         97
+  C:015DH         LINE#         98
+  C:015FH         LINE#         99
+  C:0161H         LINE#         100
+  C:0163H         LINE#         101
+  -------         ENDPROC       TIMER0INIT
+  -------         PROC          WDT_RESET
+  C:0198H         LINE#         107
+  C:0198H         LINE#         108
+  C:0198H         LINE#         115
+  C:019BH         LINE#         116
+  -------         ENDPROC       WDT_RESET
+  -------         PROC          IO_INIT
+  C:0120H         LINE#         121
+  C:0120H         LINE#         122
+  C:0120H         LINE#         124
+  C:0123H         LINE#         125
+  C:0126H         LINE#         128
+  C:0129H         LINE#         129
+  C:012CH         LINE#         131
+  C:012FH         LINE#         132
+  C:0132H         LINE#         134
+  C:0134H         LINE#         135
+  C:0136H         LINE#         136
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/25/2015  15:04:15  PAGE 4
+
+
+  C:0138H         LINE#         137
+  -------         ENDPROC       IO_INIT
+  -------         PROC          _RED_LIGHT_CTRL
+  D:0007H         SYMBOL        status
+  C:017FH         LINE#         155
+  C:017FH         LINE#         156
+  C:017FH         LINE#         157
+  C:0182H         LINE#         158
+  C:0182H         LINE#         159
+  C:0184H         LINE#         160
+  C:0185H         LINE#         162
+  C:0185H         LINE#         163
+  C:0187H         LINE#         164
+  C:0187H         LINE#         165
+  -------         ENDPROC       _RED_LIGHT_CTRL
+  -------         PROC          _GREEN_LIGHT_CTRL
+  D:0007H         SYMBOL        status
+  C:0188H         LINE#         182
+  C:0188H         LINE#         183
+  C:0188H         LINE#         184
+  C:018BH         LINE#         185
+  C:018BH         LINE#         186
+  C:018DH         LINE#         187
+  C:018EH         LINE#         189
+  C:018EH         LINE#         190
+  C:0190H         LINE#         191
+  C:0190H         LINE#         192
+  -------         ENDPROC       _GREEN_LIGHT_CTRL
+  -------         PROC          KEYCHECK
+  C:0172H         LINE#         247
+  C:0172H         LINE#         248
+  C:0172H         LINE#         278
+  C:0175H         LINE#         279
+  C:0175H         LINE#         281
+  C:0178H         LINE#         297
+  C:0178H         LINE#         300
+  C:017BH         LINE#         301
+  C:017BH         LINE#         303
+  C:017EH         LINE#         304
+  C:017EH         LINE#         306
+  -------         ENDPROC       KEYCHECK
+  -------         PROC          T0_INT
+  C:0003H         LINE#         311
+  C:0003H         LINE#         313
+  C:0005H         LINE#         314
+  C:0008H         LINE#         315
+  C:000AH         LINE#         316
+  -------         ENDPROC       T0_INT
+  -------         PROC          MAIN
+  -------         DO            
+  D:0003H         SYMBOL        sysStatus
+  -------         ENDDO         
+  C:009AH         LINE#         322
+  C:009AH         LINE#         323
+  C:009AH         LINE#         324
+  C:009CH         LINE#         325
+  C:009FH         LINE#         326
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/25/2015  15:04:15  PAGE 5
+
+
+  C:00A2H         LINE#         327
+  C:00A9H         LINE#         333
+  C:00ACH         LINE#         334
+  C:00AEH         LINE#         335
+  C:00AEH         LINE#         336
+  C:00AEH         LINE#         337
+  C:00B1H         LINE#         339
+  C:00B8H         LINE#         354
+  C:00BBH         LINE#         355
+  C:00BBH         LINE#         356
+  C:00BDH         LINE#         357
+  C:00C2H         LINE#         358
+  C:00C5H         LINE#         360
+  C:00CAH         LINE#         361
+  C:00CAH         LINE#         362
+  C:00CCH         LINE#         364
+  C:00D1H         LINE#         365
+  C:00D4H         LINE#         366
+  C:00D4H         LINE#         367
+  C:00D6H         LINE#         368
+  C:00D6H         LINE#         371
+  C:00D8H         LINE#         373
+  C:00DCH         LINE#         374
+  C:00DCH         LINE#         376
+  C:00DEH         LINE#         378
+  C:00DEH         LINE#         379
+  C:00E0H         LINE#         381
+  C:00E3H         LINE#         382
+  C:00E3H         LINE#         383
+  C:00E6H         LINE#         384
+  C:00E6H         LINE#         385
+  C:00EAH         LINE#         386
+  C:00EEH         LINE#         387
+  C:00F0H         LINE#         389
+  C:00F0H         LINE#         390
+  C:00F5H         LINE#         391
+  C:00F9H         LINE#         392
+  C:00F9H         LINE#         394
+  C:00FEH         LINE#         395
+  C:00FEH         LINE#         396
+  C:0103H         LINE#         397
+  C:0107H         LINE#         398
+  C:0109H         LINE#         400
+  C:010FH         LINE#         401
+  C:0112H         LINE#         402
+  C:0112H         LINE#         403
+  C:0114H         LINE#         404
+  C:0114H         LINE#         406
+  C:0116H         LINE#         408
+  C:0118H         LINE#         411
+  C:011CH         LINE#         412
+  C:011CH         LINE#         413
+  C:011EH         LINE#         417
+  C:011EH         LINE#         418
+  C:011EH         LINE#         419
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/25/2015  15:04:15  PAGE 6
+
+
+
+  -------         MODULE        CBM7008
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00F0H         PUBLIC        B
+  D:00E0H         PUBLIC        ACC
+  D:00D0H         PUBLIC        PSW
+  -------         ENDMOD        CBM7008
+
+Program Size: data=11.0 xdata=0 code=412
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

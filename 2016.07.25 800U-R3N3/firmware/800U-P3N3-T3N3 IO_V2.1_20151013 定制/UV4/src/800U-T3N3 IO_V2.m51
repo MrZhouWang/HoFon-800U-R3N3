@@ -1,0 +1,631 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        09/08/2015  15:03:36  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\PROGRAM FILES\KEIL4\C51\BIN\BL51.EXE .\main.obj, .\CBM7008.obj TO 800U-T3N3 IO_V2.1(RGG) PRINT (.\src\800U-T3N3 IO_V2
+>> .m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\main.obj (MAIN)
+  .\CBM7008.obj (CBM7008)
+  D:\PROGRAM FILES\KEIL4\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\PROGRAM FILES\KEIL4\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  800U-T3N3 IO_V2.1(RGG) (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         _DATA_GROUP_
+            DATA    000CH     0002H     UNIT         ?DT?MAIN
+            IDATA   000EH     0008H     UNIT         ?ID?MAIN
+            IDATA   0016H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0008H     UNIT         ?PR?T0_INT?MAIN
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    009AH     006FH     UNIT         ?PR?_IIC_READ_BYTE?CBM7008
+            CODE    0109H     0063H     UNIT         ?PR?MAIN?MAIN
+            CODE    016CH     0060H     UNIT         ?PR?_IIC_WRITE_BYTE?CBM7008
+            CODE    01CCH     0039H     UNIT         ?PR?GET_CBM7008_ID?CBM7008
+            CODE    0205H     002EH     UNIT         ?PR?GET_CBM7008_NLMD?CBM7008
+            CODE    0233H     002EH     UNIT         ?PR?GET_CBM7008_KEYSTS?CBM7008
+            CODE    0261H     0029H     UNIT         ?PR?SET_CBM7008_NLMD?CBM7008
+            CODE    028AH     0026H     UNIT         ?PR?CBM7008_INIT?CBM7008
+            CODE    02B0H     0025H     UNIT         ?PR?_LED_LIGHT_CTRL?MAIN
+            CODE    02D5H     0021H     UNIT         ?PR?_DELAY_US?CBM7008
+            CODE    02F6H     0019H     UNIT         ?PR?IO_INIT?MAIN
+            CODE    030FH     0018H     UNIT         ?PR?_DELAYMS?MAIN
+            CODE    0327H     0015H     UNIT         ?PR?KEYCHECK?MAIN
+            CODE    033CH     0013H     UNIT         ?PR?TIMER0INIT?MAIN
+            CODE    034FH     0013H     UNIT         ?PR?IIC_START?CBM7008
+            CODE    0362H     000EH     UNIT         ?PR?DELAY1MS?MAIN
+            CODE    0370H     000EH     UNIT         ?PR?IIC_STOP?CBM7008
+            CODE    037EH     000CH     UNIT         ?PR?SCAN_VAL?CBM7008
+            CODE    038AH     0007H     UNIT         ?C_INITSEG
+            CODE    0391H     0005H     UNIT         ?PR?CBM7008IO_CONFIG?CBM7008
+            CODE    0396H     0004H     UNIT         ?PR?WDT_RESET?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   800U-T3N3 IO_V2.1(RGG) (MAIN)
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 2
+
+
+
+
+SEGMENT                                  DATA_GROUP 
+  +--> CALLED SEGMENT                  START    LENGTH
+------------------------------------------------------
+?C_C51STARTUP                          -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                          0008H    0001H
+  +--> ?PR?IO_INIT?MAIN
+  +--> ?PR?WDT_RESET?MAIN
+  +--> ?PR?_DELAYMS?MAIN
+  +--> ?PR?CBM7008_INIT?CBM7008
+  +--> ?PR?TIMER0INIT?MAIN
+  +--> ?PR?KEYCHECK?MAIN
+  +--> ?PR?_LED_LIGHT_CTRL?MAIN
+
+?PR?_DELAYMS?MAIN                      -----    -----
+  +--> ?PR?DELAY1MS?MAIN
+
+?PR?CBM7008_INIT?CBM7008               0009H    0001H
+  +--> ?PR?CBM7008IO_CONFIG?CBM7008
+  +--> ?PR?GET_CBM7008_ID?CBM7008
+  +--> ?PR?SET_CBM7008_NLMD?CBM7008
+  +--> ?PR?GET_CBM7008_NLMD?CBM7008
+  +--> ?PR?_DELAYMS?MAIN
+
+?PR?GET_CBM7008_ID?CBM7008             000AH    0002H
+  +--> ?PR?IIC_START?CBM7008
+  +--> ?PR?_IIC_WRITE_BYTE?CBM7008
+  +--> ?PR?_IIC_READ_BYTE?CBM7008
+  +--> ?PR?IIC_STOP?CBM7008
+
+?PR?IIC_START?CBM7008                  -----    -----
+  +--> ?PR?_IIC_WRITE_BYTE?CBM7008
+  +--> ?PR?IIC_STOP?CBM7008
+  +--> ?PR?_DELAY_US?CBM7008
+
+?PR?_IIC_WRITE_BYTE?CBM7008            -----    -----
+  +--> ?PR?_DELAY_US?CBM7008
+
+?PR?IIC_STOP?CBM7008                   -----    -----
+  +--> ?PR?_DELAY_US?CBM7008
+
+?PR?_IIC_READ_BYTE?CBM7008             -----    -----
+  +--> ?PR?_DELAY_US?CBM7008
+
+?PR?SET_CBM7008_NLMD?CBM7008           -----    -----
+  +--> ?PR?IIC_START?CBM7008
+  +--> ?PR?_IIC_WRITE_BYTE?CBM7008
+  +--> ?PR?IIC_STOP?CBM7008
+
+?PR?GET_CBM7008_NLMD?CBM7008           -----    -----
+  +--> ?PR?IIC_START?CBM7008
+  +--> ?PR?_IIC_WRITE_BYTE?CBM7008
+  +--> ?PR?_IIC_READ_BYTE?CBM7008
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 3
+
+
+  +--> ?PR?IIC_STOP?CBM7008
+
+?PR?KEYCHECK?MAIN                      -----    -----
+  +--> ?PR?SCAN_VAL?CBM7008
+
+?PR?SCAN_VAL?CBM7008                   -----    -----
+  +--> ?PR?GET_CBM7008_KEYSTS?CBM7008
+
+?PR?GET_CBM7008_KEYSTS?CBM7008         -----    -----
+  +--> ?PR?IIC_START?CBM7008
+  +--> ?PR?_IIC_WRITE_BYTE?CBM7008
+  +--> ?PR?_IIC_READ_BYTE?CBM7008
+  +--> ?PR?IIC_STOP?CBM7008
+
+
+
+SYMBOL TABLE OF MODULE:  800U-T3N3 IO_V2.1(RGG) (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0092H         PUBLIC        P1M0
+  D:0091H         PUBLIC        P1M1
+  D:0080H         PUBLIC        P0
+  D:00B2H         PUBLIC        P3M0
+  D:0090H         PUBLIC        P1
+  D:00B1H         PUBLIC        P3M1
+  D:00A0H         PUBLIC        P2
+  D:00CAH         PUBLIC        P5M0
+  D:00B0H         PUBLIC        P3
+  D:00C9H         PUBLIC        P5M1
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  B:00A8H.7       PUBLIC        EA
+  C:0327H         PUBLIC        KeyCheck
+  B:0090H.5       PUBLIC        p_singal_out
+  D:00A8H         PUBLIC        IE
+  C:02F6H         PUBLIC        IO_Init
+  B:0090H.2       PUBLIC        p_led_blue
+  D:00B8H         PUBLIC        IP
+  B:0090H.4       PUBLIC        p_led_red
+  D:00D8H         PUBLIC        CCON
+  C:0109H         PUBLIC        main
+  C:0003H         PUBLIC        T0_int
+  D:000CH         PUBLIC        KeyStatus
+  C:030FH         PUBLIC        _DelayMs
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  I:000EH         PUBLIC        lmd
+  D:00F0H         PUBLIC        B
+  D:008EH         PUBLIC        AUXR
+  B:00C8H.4       PUBLIC        p_mcu_ctr
+  D:00E0H         PUBLIC        ACC
+  B:00A8H.1       PUBLIC        ET0
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 4
+
+
+  C:02B0H         PUBLIC        _led_light_ctrl
+  B:0088H.5       PUBLIC        TF0
+  C:033CH         PUBLIC        Timer0Init
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  C:0396H         PUBLIC        WDT_Reset
+  B:0088H.4       PUBLIC        TR0
+  D:00C1H         PUBLIC        WDT_CONTR
+  C:0362H         PUBLIC        Delay1Ms
+  B:0090H.0       PUBLIC        p_signal_input
+  D:000DH         PUBLIC        sysStatus
+  D:00D0H         PUBLIC        PSW
+  B:0090H.3       PUBLIC        p_led_green
+  -------         PROC          DELAY1MS
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0362H         LINE#         61
+  C:0362H         LINE#         62
+  C:0362H         LINE#         63
+  C:0366H         LINE#         64
+  C:036FH         LINE#         65
+  -------         ENDPROC       DELAY1MS
+  -------         PROC          _DELAYMS
+  D:0004H         SYMBOL        usDelay
+  C:030FH         LINE#         73
+  C:0313H         LINE#         74
+  C:0313H         LINE#         75
+  C:031CH         LINE#         76
+  C:031CH         LINE#         77
+  C:031FH         LINE#         78
+  C:0326H         LINE#         79
+  -------         ENDPROC       _DELAYMS
+  -------         PROC          TIMER0INIT
+  C:033CH         LINE#         92
+  C:033CH         LINE#         93
+  C:033CH         LINE#         94
+  C:033FH         LINE#         95
+  C:0342H         LINE#         96
+  C:0345H         LINE#         97
+  C:0348H         LINE#         98
+  C:034AH         LINE#         99
+  C:034CH         LINE#         100
+  C:034EH         LINE#         101
+  -------         ENDPROC       TIMER0INIT
+  -------         PROC          WDT_RESET
+  C:0396H         LINE#         107
+  C:0396H         LINE#         108
+  C:0396H         LINE#         109
+  C:0399H         LINE#         110
+  -------         ENDPROC       WDT_RESET
+  -------         PROC          IO_INIT
+  C:02F6H         LINE#         115
+  C:02F6H         LINE#         116
+  C:02F6H         LINE#         118
+  C:02F9H         LINE#         119
+  C:02FCH         LINE#         122
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 5
+
+
+  C:02FFH         LINE#         123
+  C:0302H         LINE#         125
+  C:0305H         LINE#         126
+  C:0308H         LINE#         128
+  C:030AH         LINE#         129
+  C:030CH         LINE#         130
+  C:030EH         LINE#         131
+  -------         ENDPROC       IO_INIT
+  -------         PROC          _LED_LIGHT_CTRL
+  D:0007H         SYMBOL        status
+  C:02B0H         LINE#         137
+  C:02B0H         LINE#         138
+  C:02B0H         LINE#         140
+  C:02BCH         LINE#         141
+  C:02BCH         LINE#         142
+  C:02BCH         LINE#         143
+  C:02BEH         LINE#         144
+  C:02BEH         LINE#         145
+  C:02BEH         LINE#         146
+  C:02C0H         LINE#         147
+  C:02C0H         LINE#         148
+  C:02C2H         LINE#         149
+  C:02C4H         LINE#         150
+  C:02C6H         LINE#         151
+  C:02C7H         LINE#         153
+  C:02C7H         LINE#         154
+  C:02C9H         LINE#         155
+  C:02CBH         LINE#         156
+  C:02CDH         LINE#         157
+  C:02CEH         LINE#         158
+  C:02CEH         LINE#         159
+  C:02D0H         LINE#         160
+  C:02D2H         LINE#         161
+  C:02D4H         LINE#         162
+  C:02D4H         LINE#         163
+  -------         ENDPROC       _LED_LIGHT_CTRL
+  -------         PROC          KEYCHECK
+  C:0327H         LINE#         171
+  C:0327H         LINE#         172
+  C:0327H         LINE#         175
+  C:032DH         LINE#         176
+  C:032DH         LINE#         177
+  C:0330H         LINE#         178
+  C:0330H         LINE#         180
+  C:0338H         LINE#         181
+  C:0338H         LINE#         182
+  C:033BH         LINE#         183
+  C:033BH         LINE#         196
+  -------         ENDPROC       KEYCHECK
+  -------         PROC          T0_INT
+  C:0003H         LINE#         201
+  C:0003H         LINE#         203
+  C:0005H         LINE#         204
+  C:0008H         LINE#         205
+  C:000AH         LINE#         206
+  -------         ENDPROC       T0_INT
+  -------         PROC          MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 6
+
+
+  -------         DO            
+  D:0008H         SYMBOL        sysStatus
+  -------         ENDDO         
+  C:0109H         LINE#         211
+  C:0109H         LINE#         212
+  C:0109H         LINE#         213
+  C:010CH         LINE#         214
+  C:010FH         LINE#         215
+  C:0112H         LINE#         216
+  C:0119H         LINE#         219
+  C:011CH         LINE#         222
+  C:011FH         LINE#         223
+  C:0121H         LINE#         224
+  C:0121H         LINE#         225
+  C:0121H         LINE#         226
+  C:0124H         LINE#         228
+  C:012BH         LINE#         231
+  C:012EH         LINE#         232
+  C:012EH         LINE#         234
+  C:0133H         LINE#         235
+  C:0136H         LINE#         236
+  C:0138H         LINE#         238
+  C:0138H         LINE#         240
+  C:013CH         LINE#         241
+  C:013CH         LINE#         242
+  C:013EH         LINE#         243
+  C:013EH         LINE#         244
+  C:0140H         LINE#         246
+  C:0140H         LINE#         248
+  C:0145H         LINE#         249
+  C:0145H         LINE#         250
+  C:014AH         LINE#         251
+  C:014AH         LINE#         255
+  C:014EH         LINE#         256
+  C:014EH         LINE#         257
+  C:0153H         LINE#         258
+  C:0153H         LINE#         260
+  C:0153H         LINE#         261
+  C:0153H         LINE#         264
+  C:0158H         LINE#         265
+  C:0158H         LINE#         266
+  C:015AH         LINE#         268
+  C:0161H         LINE#         269
+  C:0164H         LINE#         270
+  C:0164H         LINE#         271
+  C:0166H         LINE#         272
+  C:0166H         LINE#         273
+  C:0168H         LINE#         275
+  C:0168H         LINE#         276
+  C:016AH         LINE#         277
+  C:016AH         LINE#         278
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        CBM7008
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 7
+
+
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  C:037EH         PUBLIC        Scan_Val
+  D:00A8H         PUBLIC        IE
+  C:01CCH         PUBLIC        Get_CBM7008_ID
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:028AH         PUBLIC        CBM7008_init
+  D:00F0H         PUBLIC        B
+  D:00E0H         PUBLIC        ACC
+  C:0355H         PUBLIC        iic_start
+  B:00B0H.2       PUBLIC        pSDA
+  C:00AEH         PUBLIC        _iic_read_byte
+  C:0205H         PUBLIC        Get_CBM7008_nLMD
+  B:00B0H.3       PUBLIC        pSCL
+  C:02E2H         PUBLIC        _delay_us
+  C:0178H         PUBLIC        _iic_write_byte
+  C:0261H         PUBLIC        Set_CBM7008_nLMD
+  C:0370H         PUBLIC        iic_stop
+  C:0233H         PUBLIC        Get_CBM7008_KeySts
+  C:0391H         PUBLIC        CBM7008IO_Config
+  D:00D0H         PUBLIC        PSW
+  C:02D7H         SYMBOL        L?0044
+  C:02DCH         SYMBOL        L?0045
+  C:02DEH         SYMBOL        L?0046
+  -------         PROC          L?0043
+  -------         ENDPROC       L?0043
+  C:02D7H         SYMBOL        L?0044
+  C:02DCH         SYMBOL        L?0045
+  C:02DEH         SYMBOL        L?0046
+  -------         PROC          _DELAY_US
+  D:0006H         SYMBOL        us
+  C:02E2H         LINE#         10
+  C:02E2H         LINE#         11
+  C:02E2H         LINE#         16
+  C:02EBH         LINE#         18
+  C:02F5H         LINE#         19
+  -------         ENDPROC       _DELAY_US
+  C:034FH         SYMBOL        L?0051
+  -------         PROC          L?0050
+  -------         ENDPROC       L?0050
+  C:034FH         SYMBOL        L?0051
+  -------         PROC          IIC_START
+  C:0355H         LINE#         29
+  C:0355H         LINE#         30
+  C:0355H         LINE#         31
+  C:0357H         LINE#         32
+  C:0357H         LINE#         33
+  C:0357H         LINE#         34
+  C:035AH         LINE#         35
+  C:035CH         LINE#         36
+  C:035FH         LINE#         37
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 8
+
+
+  C:0361H         LINE#         38
+  -------         ENDPROC       IIC_START
+  -------         PROC          IIC_STOP
+  C:0370H         LINE#         46
+  C:0370H         LINE#         47
+  C:0370H         LINE#         50
+  C:0372H         LINE#         51
+  C:0372H         LINE#         52
+  C:0372H         LINE#         53
+  C:0375H         LINE#         54
+  C:0377H         LINE#         55
+  -------         ENDPROC       IIC_STOP
+  C:0173H         SYMBOL        L?0049
+  -------         PROC          L?0048
+  -------         ENDPROC       L?0048
+  C:0173H         SYMBOL        L?0049
+  -------         PROC          _IIC_WRITE_BYTE
+  D:0005H         SYMBOL        dat
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0005H         SYMBOL        flg
+  -------         ENDDO         
+  C:0178H         LINE#         103
+  C:017AH         LINE#         104
+  C:017AH         LINE#         108
+  C:017CH         LINE#         109
+  C:017CH         LINE#         110
+  C:0185H         LINE#         113
+  C:0189H         LINE#         114
+  C:018DH         LINE#         115
+  C:018FH         LINE#         116
+  C:0195H         LINE#         117
+  C:0198H         LINE#         118
+  C:019AH         LINE#         122
+  C:01A3H         LINE#         123
+  C:01A7H         LINE#         124
+  C:01AAH         LINE#         127
+  C:01ACH         LINE#         128
+  C:01AEH         LINE#         129
+  C:01AEH         LINE#         130
+  C:01B1H         LINE#         131
+  C:01B5H         LINE#         132
+  C:01BCH         LINE#         133
+  C:01BEH         LINE#         135
+  C:01C7H         LINE#         136
+  C:01C9H         LINE#         138
+  C:01CBH         LINE#         139
+  -------         ENDPROC       _IIC_WRITE_BYTE
+  -------         PROC          L?0047
+  -------         ENDPROC       L?0047
+  -------         PROC          _IIC_READ_BYTE
+  D:0005H         SYMBOL        ack
+  -------         DO            
+  D:0003H         SYMBOL        i
+  D:0004H         SYMBOL        dat
+  -------         ENDDO         
+  C:00AEH         LINE#         149
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 9
+
+
+  C:00B0H         LINE#         150
+  C:00B0H         LINE#         151
+  C:00B2H         LINE#         153
+  C:00BAH         LINE#         154
+  C:00C3H         LINE#         156
+  C:00C5H         LINE#         157
+  C:00C5H         LINE#         158
+  C:00CEH         LINE#         159
+  C:00DCH         LINE#         161
+  C:00E3H         LINE#         162
+  C:00E8H         LINE#         163
+  C:00EAH         LINE#         165
+  C:00EDH         LINE#         166
+  C:00F1H         LINE#         167
+  C:00FAH         LINE#         168
+  C:00FDH         LINE#         169
+  C:0106H         LINE#         171
+  C:0108H         LINE#         172
+  -------         ENDPROC       _IIC_READ_BYTE
+  -------         PROC          CBM7008IO_CONFIG
+  C:0391H         LINE#         274
+  C:0391H         LINE#         275
+  C:0391H         LINE#         278
+  C:0393H         LINE#         281
+  C:0395H         LINE#         283
+  -------         ENDPROC       CBM7008IO_CONFIG
+  -------         PROC          SET_CBM7008_NLMD
+  -------         DO            
+  D:0003H         SYMBOL        OkLmd
+  -------         ENDDO         
+  C:0261H         LINE#         300
+  C:0261H         LINE#         301
+  C:0261H         LINE#         304
+  C:026DH         LINE#         305
+  C:026FH         LINE#         307
+  C:0272H         LINE#         308
+  C:0277H         LINE#         311
+  C:0279H         LINE#         314
+  C:027CH         LINE#         318
+  C:0281H         LINE#         319
+  C:0281H         LINE#         320
+  C:0281H         LINE#         321
+  C:0284H         LINE#         322
+  C:0284H         LINE#         323
+  C:0284H         LINE#         324
+  C:0287H         LINE#         326
+  -------         ENDPROC       SET_CBM7008_NLMD
+  -------         PROC          GET_CBM7008_ID
+  -------         DO            
+  D:000AH         SYMBOL        temp
+  -------         ENDDO         
+  C:01CCH         LINE#         354
+  C:01CCH         LINE#         355
+  C:01CCH         LINE#         356
+  C:01D1H         LINE#         357
+  C:01D4H         LINE#         358
+  C:01D9H         LINE#         360
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 10
+
+
+  C:01DBH         LINE#         362
+  C:01DBH         LINE#         363
+  C:01DEH         LINE#         364
+  C:01E3H         LINE#         367
+  C:01EEH         LINE#         368
+  C:01FDH         LINE#         370
+  C:0200H         LINE#         371
+  C:0204H         LINE#         372
+  -------         ENDPROC       GET_CBM7008_ID
+  -------         PROC          GET_CBM7008_NLMD
+  C:0205H         LINE#         379
+  C:0205H         LINE#         380
+  C:0205H         LINE#         382
+  C:0208H         LINE#         383
+  C:020DH         LINE#         385
+  C:020FH         LINE#         387
+  C:020FH         LINE#         388
+  C:0212H         LINE#         389
+  C:0217H         LINE#         392
+  C:021EH         LINE#         393
+  C:021EH         LINE#         394
+  C:021EH         LINE#         395
+  C:0222H         LINE#         396
+  C:0222H         LINE#         397
+  C:0222H         LINE#         398
+  C:0228H         LINE#         399
+  C:0230H         LINE#         401
+  -------         ENDPROC       GET_CBM7008_NLMD
+  -------         PROC          GET_CBM7008_KEYSTS
+  -------         DO            
+  D:0005H         SYMBOL        chksum
+  D:0002H         SYMBOL        keysts
+  -------         ENDDO         
+  C:0233H         LINE#         409
+  C:0233H         LINE#         410
+  C:0233H         LINE#         412
+  C:0236H         LINE#         413
+  C:023BH         LINE#         415
+  C:023DH         LINE#         417
+  C:023DH         LINE#         418
+  C:0240H         LINE#         419
+  C:0245H         LINE#         422
+  C:024CH         LINE#         423
+  C:0253H         LINE#         425
+  C:0256H         LINE#         427
+  C:025CH         LINE#         428
+  C:025EH         LINE#         429
+  C:0260H         LINE#         430
+  -------         ENDPROC       GET_CBM7008_KEYSTS
+  -------         PROC          CBM7008_INIT
+  -------         DO            
+  D:0009H         SYMBOL        i
+  -------         ENDDO         
+  C:028AH         LINE#         436
+  C:028AH         LINE#         437
+  C:028AH         LINE#         439
+  C:028DH         LINE#         442
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/08/2015  15:03:36  PAGE 11
+
+
+  C:0290H         LINE#         443
+  C:0290H         LINE#         444
+  C:0299H         LINE#         445
+  C:0299H         LINE#         446
+  C:029CH         LINE#         447
+  C:029FH         LINE#         449
+  C:029FH         LINE#         450
+  C:02A6H         LINE#         451
+  C:02AFH         LINE#         452
+  -------         ENDPROC       CBM7008_INIT
+  -------         PROC          SCAN_VAL
+  -------         DO            
+  D:0007H         SYMBOL        keyval
+  -------         ENDDO         
+  C:037EH         LINE#         458
+  C:037EH         LINE#         459
+  C:037EH         LINE#         460
+  C:0380H         LINE#         463
+  C:0383H         LINE#         465
+  C:0387H         LINE#         466
+  C:0389H         LINE#         468
+  C:0389H         LINE#         469
+  -------         ENDPROC       SCAN_VAL
+  -------         ENDMOD        CBM7008
+
+Program Size: data=23.0 xdata=0 code=922
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
